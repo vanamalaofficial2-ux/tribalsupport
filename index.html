@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VanaMala</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #5a3d27, #8b5a2b, #c68b3b);
+      background-attachment: fixed;
+      color: #333;
+      animation: fadeInBody 1.2s ease-in;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #8b4513, #c67b39);
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+      animation: slideDown 1s ease;
+      font-style: italic;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .quote {
+      font-size: 18px;
+      margin-top: 5px;
+      font-style: italic;
+      opacity: 0.9;
+      animation: fadeIn 1.8s ease;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* HERO SECTION */
+    .hero {
+      height: 450px;
+      background: url('https://images.unsplash.com/photo-1600473763807-6defe0d19f49?auto=format') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+      animation: fadeInHero 1.5s ease;
+    }
+
+    @keyframes fadeInHero {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      margin: 0;
+      font-weight: 700;
+      animation: slideUp 1.4s ease;
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-top: 10px;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+      animation: fadeInSection 1.3s ease;
+    }
+
+    @keyframes fadeInSection {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      color: #8b4513;
+      font-weight: 700;
+    }
+
+    .section p {
+      max-width: 750px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    /* CARDS */
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: white;
+      width: 300px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      transition: 0.3s;
+      animation: fadeInCard 1.3s ease;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 15px 0 5px;
+      font-size: 22px;
+      color: #5a351e;
+    }
+
+    .card p {
+      padding: 0 20px 20px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #8b4513;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 16px;
+      animation: fadeIn 2s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    VanaMala
+    <div class="quote">"Bringing tribal art to every heart"</div>
+  </header>
+
+  <div class="hero">
+    <h1>Discover Tribal Art</h1>
+    <p>Authentic • Handmade • Meaningful</p>
+  </div>
+
+  <!-- CLICKABLE OUR MISSION -->
+  <div class="section">
+    <h2>
+      <a href="file:///C:/Users/praka/Documents/Ourmission.html" style="color:#4b1e0a; text-decoration:none; cursor:pointer;">
+        Our Mission
+      </a>
+    </h2>
+    <p>
+      We empower tribal artists by buying their beautiful clay toys and crafts at fair prices.
+      The money earned helps us visit remote schools, teach them about safety, and inspire confidence.
+      Every product you buy supports a village and builds a safer tomorrow.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2><span style="color:#4b1e0a;">Crafts We Bring</span></h2>
+
+    <div class="cards">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format" />
+        <h3>Clay Toys</h3>
+        <p>Handcrafted clay toys carrying the warmth of Indian villages.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format" />
+        <h3>Folk Paintings</h3>
+        <p>Unique traditional art celebrating culture and stories.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1508556497405-ed7dcd94ac68?auto=format" />
+        <h3>Decor Pieces</h3>
+        <p>Beautiful handmade decor crafted with love and care.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 VanaMala — Supporting Tribal Communities
+  </footer>
+
+  <!-- Donation Button -->
+  <div style="text-align:center; margin:40px;">
+    <button id="donateBtn" style="padding:15px 30px; background:#4b1e0a; color:white; border:none; border-radius:12px; font-size:20px; cursor:pointer;">Donate</button>
+  </div>
+
+  <!-- Popup -->
+  <div id="donationPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:20px; width:320px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.3); animation:pop 0.3s ease;">
+      <h2 style="color:#4b1e0a;">Support Our Mission</h2>
+      <p>Scan the UPI QR or use the ID below:</p>
+      <img src="YOUR_QR_IMAGE.png" style="width:200px; border-radius:10px; margin:10px 0;" />
+      <p style="font-weight:bold;">vanamala@upi</p>
+      <button id="closePopup" style="margin-top:15px; padding:10px 20px; background:#4b1e0a; color:white; border:none; border-radius:10px; cursor:pointer;">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const donateBtn = document.getElementById('donateBtn');
+    const popup = document.getElementById('donationPopup');
+    const closePopup = document.getElementById('closePopup');
+
+    donateBtn.onclick = () => popup.style.display = 'flex';
+    closePopup.onclick = () => popup.style.display = 'none';
+  </script>
+
+</body>
+</html>
