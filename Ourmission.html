@@ -1,73 +1,177 @@
-<!-- Mission: Replace old mission section with this -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanaMala - Our Mission</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    emailjs.init("service_jps2f76");   // ONLY service ID
+</script>
+
 <style>
-  /* Mission card styles (paste in <head> or keep here) */
-  #mission {
-    background: rgba(255,255,255,0.95);
-    max-width: 980px;
-    margin: 36px auto;
-    padding: 36px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
-    display: flex;
-    gap: 26px;
-    align-items: center;
-    color: #5a2e0d;
-    transform-origin: center;
-    animation: missionPop 0.7s ease;
-  }
-  #mission img {
-    width: 280px;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-  }
-  #mission .text {
-    flex: 1;
-    text-align: left;
-  }
-  #mission h2 {
-    margin: 0 0 10px;
-    font-size: 28px;
-    color: #4b1e0a;
-  }
-  #mission p { margin: 10px 0; font-size: 17px; line-height:1.6; color:#3d2314; }
-  #mission .cta {
-    margin-top:12px;
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  .btn-solid {
-    background:#4b1e0a; color:white; padding:10px 18px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
-    box-shadow: 0 6px 16px rgba(75,30,10,0.28);
-  }
-  .btn-ghost {
-    background: transparent; border:2px solid #4b1e0a; color:#4b1e0a; padding:8px 14px; border-radius:10px; cursor:pointer; font-weight:600;
-  }
-  @keyframes missionPop { from { transform: translateY(20px) scale(.98); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .header {
+        background: #2b4f32;
+        padding: 30px;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .mission-box {
+        width: 85%;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border: none;
+        background: #2b4f32;
+        color: white;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    .btn:hover {
+        background: #1f3b25;
+    }
+
+    /* POPUP BACKGROUND */
+    .popup-bg {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* POPUP BOX */
+    .popup-box {
+        background: white;
+        padding: 25px;
+        width: 90%;
+        max-width: 350px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    input, label {
+        display: block;
+        width: 90%;
+        margin: 10px auto;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
 </style>
+</head>
+<body>
 
-<div id="mission" role="region" aria-label="Our Mission">
-  <!-- replace path if needed -->
-  <img src="/mnt/data/b449716e-1dae-4e30-b6c3-32e600f8189f.png" alt="Village craft making" />
+<div class="header">Our Mission</div>
 
-  <div class="text">
-    <h2>Our Mission</h2>
-
-    <p><strong>Every year, tens of thousands of people lose their lives in disasters around the world — and many of those lives are taken in small, remote communities that have little or no safety training.</strong> Globally disasters have caused on average about <strong>40,000–50,000 deaths per year</strong> in recent decades. :contentReference[oaicite:0]{index=0}</p>
-
-    <p>In India alone recent government figures show that extreme natural hazards caused over <strong>3,000 deaths in 2024–25</strong> — most of them in rural and remote areas where people work outdoors and schools lack basic disaster awareness. :contentReference[oaicite:1]{index=1}</p>
-
-    <p>We buy clay toys and crafts at fair prices so tribal artists earn more — and we use the profits to go into these communities and teach simple, life-saving safety steps: how to act during an earthquake, how to find safe exits during a fire, and how to prepare for floods. Small knowledge can save whole families.</p>
-
-    <p style="font-style:italic; color:#6a3d27; margin-top:8px;">
-      When you buy from VanaMala, you are not only taking home a beautiful craft — you are helping a teacher reach a child who might otherwise never learn these simple rules.
+<div class="mission-box">
+    <p>
+        Every year, thousands of lives are lost due to man-made and natural disasters in remote areas 
+        where emergency help arrives too late. VanaMala exists to bring safety, awareness, and rapid 
+        local support to people who need it the most.  
+        <br><br>
+        We are building a generation that knows how to respond, protect, and save lives.  
+        Your support has the power to reduce tragedy and create safer communities.
     </p>
 
-    <div class="cta">
-      <button class="btn-solid" onclick="document.getElementById('donateBtn').click();">Donate Now</button>
-      <button class="btn-ghost" onclick="window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});">Book Our Session</button>
-    </div>
-  </div>
+    <button class="btn" onclick="openDonate()">Donate Now</button>
+    <button class="btn" onclick="openSession()">Book Our Session</button>
 </div>
+
+
+<!-- DONATE POPUP -->
+<div id="donatePopup" class="popup-bg">
+    <div class="popup-box">
+        <h3>Donate via UPI</h3>
+        <p><b>akscosouth@okhdfcbank</b></p>
+        <button class="btn" onclick="closeDonate()">Close</button>
+    </div>
+</div>
+
+<!-- SESSION POPUP -->
+<div id="sessionPopup" class="popup-bg">
+    <div class="popup-box">
+        <h3>Book a Session</h3>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="date" id="dob">
+        <input type="tel" id="phone" placeholder="Phone Number">
+
+        <label>
+            <input type="checkbox" id="robotCheck"> I'm not a robot
+        </label>
+
+        <button class="btn" onclick="submitForm()">Submit</button>
+        <button class="btn" onclick="closeSession()">Close</button>
+    </div>
+</div>
+
+<script>
+    function openDonate() {
+        document.getElementById("donatePopup").style.display = "flex";
+    }
+    function closeDonate() {
+        document.getElementById("donatePopup").style.display = "none";
+    }
+
+    function openSession() {
+        document.getElementById("sessionPopup").style.display = "flex";
+    }
+    function closeSession() {
+        document.getElementById("sessionPopup").style.display = "none";
+    }
+
+    function submitForm() {
+        let name = document.getElementById("name").value;
+        let dob = document.getElementById("dob").value;
+        let phone = document.getElementById("phone").value;
+        let check = document.getElementById("robotCheck").checked;
+
+        if (!name || !dob || !phone) {
+            alert("Please fill all fields");
+            return;
+        }
+        if (!check) {
+            alert("Please verify that you're not a robot");
+            return;
+        }
+
+        emailjs.send("service_jps2f76", "", {
+            name: name,
+            dob: dob,
+            phone: phone
+        }).then(() => {
+            alert("Your booking request has been sent!");
+            closeSession();
+        });
+    }
+</script>
+
+</body>
+</html>
