@@ -1,138 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VanaMala - Our Mission</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VanaMala Mission</title>
 
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-    emailjs.init("service_jps2f76");   // ONLY service ID
-</script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f6f6f6;
+        }
+        header {
+            background: #4CAF50;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 26px;
+        }
+        .container {
+            padding: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #45a049;
+        }
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f7f7f7;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-
-    .header {
-        background: #2b4f32;
-        padding: 30px;
-        color: white;
-        font-size: 35px;
-        font-weight: bold;
-    }
-
-    .mission-box {
-        width: 85%;
-        margin: 30px auto;
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    .btn {
-        padding: 12px 25px;
-        border: none;
-        background: #2b4f32;
-        color: white;
-        font-size: 18px;
-        border-radius: 10px;
-        cursor: pointer;
-        margin: 10px;
-    }
-
-    .btn:hover {
-        background: #1f3b25;
-    }
-
-    /* POPUP BACKGROUND */
-    .popup-bg {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.6);
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* POPUP BOX */
-    .popup-box {
-        background: white;
-        padding: 25px;
-        width: 90%;
-        max-width: 350px;
-        border-radius: 12px;
-        text-align: center;
-    }
-
-    input, label {
-        display: block;
-        width: 90%;
-        margin: 10px auto;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-    }
-</style>
+        .popup-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-box {
+            background: white;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        input, label {
+            width: 100%;
+            margin: 8px 0;
+        }
+        input {
+            padding: 8px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="header">Our Mission</div>
+<header>VanaMala – Helping Hands for a Better Tomorrow</header>
 
-<div class="mission-box">
+<div class="container">
+    <h2>Our Mission</h2>
     <p>
-        Every year, thousands of lives are lost due to man-made and natural disasters in remote areas 
-        where emergency help arrives too late. VanaMala exists to bring safety, awareness, and rapid 
-        local support to people who need it the most.  
-        <br><br>
-        We are building a generation that knows how to respond, protect, and save lives.  
-        Your support has the power to reduce tragedy and create safer communities.
+        At VanaMala, we believe that small acts of kindness create massive change.  
+        Our mission is to support tribal families, underprivileged children,  
+        rural communities, and environmental protection activities.
+    </p>
+    <p>
+        We conduct donation drives, distribute essentials, support women and youth,  
+        and run awareness programs across communities in need.
     </p>
 
-    <button class="btn" onclick="openDonate()">Donate Now</button>
-    <button class="btn" onclick="openSession()">Book Our Session</button>
+    <button onclick="openDonate()">Donate Now</button>
+    <button onclick="openBooking()">Book Our Session</button>
 </div>
-
 
 <!-- DONATE POPUP -->
-<div id="donatePopup" class="popup-bg">
+<div class="popup-bg" id="donatePopup">
     <div class="popup-box">
-        <h3>Donate via UPI</h3>
-        <p><b>akscosouth@okhdfcbank</b></p>
-        <button class="btn" onclick="closeDonate()">Close</button>
+        <h2>Support Our Mission</h2>
+        <p><b>UPI ID:</b> akscosouth@okhdfcbank</p>
+
+        <!-- YOUR QR CODE IMAGE LINK -->
+        <img src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="QR Code">
+
+        <button onclick="closeDonate()">Close</button>
     </div>
 </div>
 
-<!-- SESSION POPUP -->
-<div id="sessionPopup" class="popup-bg">
+<!-- BOOKING POPUP -->
+<div class="popup-bg" id="bookingPopup">
     <div class="popup-box">
-        <h3>Book a Session</h3>
-        <input type="text" id="name" placeholder="Your Name">
-        <input type="date" id="dob">
-        <input type="tel" id="phone" placeholder="Phone Number">
+        <h2>Book Our Session</h2>
 
-        <label>
-            <input type="checkbox" id="robotCheck"> I'm not a robot
-        </label>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="date" id="dob" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
 
-        <button class="btn" onclick="submitForm()">Submit</button>
-        <button class="btn" onclick="closeSession()">Close</button>
+        <label><input type="checkbox" id="robot"> I'm not a robot</label>
+
+        <button onclick="sendBooking()">Submit</button>
+        <button onclick="closeBooking()">Close</button>
     </div>
 </div>
 
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
 <script>
+    emailjs.init("YOUR_PUBLIC_KEY"); // Example: iYW4ODkDbG7S9-aXC
+
     function openDonate() {
         document.getElementById("donatePopup").style.display = "flex";
     }
@@ -140,36 +126,33 @@
         document.getElementById("donatePopup").style.display = "none";
     }
 
-    function openSession() {
-        document.getElementById("sessionPopup").style.display = "flex";
+    function openBooking() {
+        document.getElementById("bookingPopup").style.display = "flex";
     }
-    function closeSession() {
-        document.getElementById("sessionPopup").style.display = "none";
+    function closeBooking() {
+        document.getElementById("bookingPopup").style.display = "none";
     }
 
-    function submitForm() {
+    function sendBooking() {
         let name = document.getElementById("name").value;
         let dob = document.getElementById("dob").value;
         let phone = document.getElementById("phone").value;
-        let check = document.getElementById("robotCheck").checked;
+        let robot = document.getElementById("robot").checked;
 
-        if (!name || !dob || !phone) {
-            alert("Please fill all fields");
-            return;
-        }
-        if (!check) {
-            alert("Please verify that you're not a robot");
+        if (!name || !dob || !phone || !robot) {
+            alert("Please fill all details and tick 'I'm not a robot'");
             return;
         }
 
-        emailjs.send("service_jps2f76", "", {
-            name: name,
-            dob: dob,
-            phone: phone
-        }).then(() => {
-            alert("Your booking request has been sent!");
-            closeSession();
+        emailjs.send("service_jps2f76", "template_default", {
+            user_name: name,
+            user_dob: dob,
+            user_phone: phone,
+            to_email: "vanamalaofficial2@gmail.com"
         });
+
+        alert("Your session request has been sent!");
+        closeBooking();
     }
 </script>
 
