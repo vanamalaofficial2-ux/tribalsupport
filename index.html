@@ -1,257 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VanaMala</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #5a3d27, #8b5a2b, #c68b3b);
-      background-attachment: fixed;
-      color: #333;
-      animation: fadeInBody 1.2s ease-in;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VanaMala — Tribal Art & Safety</title>
 
-    @keyframes fadeInBody {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+<style>
+  :root{
+    --bg1: #f7f4ef;
+    --brown-dark: #5a351e;
+    --brown-mid: #8b4513;
+    --accent: #c68b3b;
+    --glass: rgba(255,255,255,0.55);
+    --glass-strong: rgba(255,255,255,0.84);
+    --muted: #5b4a3f;
+    --shadow: 0 12px 40px rgba(0,0,0,0.12);
+    --radius: 14px;
+  }
 
-    /* HEADER */
-    header {
-      background: linear-gradient(135deg, #8b4513, #c67b39);
-      padding: 30px 20px;
-      text-align: center;
-      color: white;
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-      animation: slideDown 1s ease;
-      font-style: italic;
-    }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(135deg, #f5efe6 0%, #efe7db 40%, #f3efe8 100%);
+    color: #2a1f18;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
 
-    @keyframes slideDown {
-      from { transform: translateY(-40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+  /* Header */
+  header{
+    background: linear-gradient(90deg,var(--brown-mid),var(--accent));
+    color: white;
+    padding:28px 18px;
+    text-align:center;
+    font-style:italic;
+    box-shadow: var(--shadow);
+  }
+  header h1{ margin:0; font-size:30px; letter-spacing:0.6px; }
+  header .sub{ margin-top:6px; font-size:14px; opacity:0.95; }
 
-    .quote {
-      font-size: 18px;
-      margin-top: 5px;
-      font-style: italic;
-      opacity: 0.9;
-      animation: fadeIn 1.8s ease;
-    }
+  /* container */
+  main{ max-width:1100px; margin:-48px auto 60px; padding:20px; }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
+  /* Hero */
+  .hero{
+    display:flex; gap:24px; align-items:center;
+    padding:28px; border-radius:16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
+    box-shadow:0 18px 46px rgba(0,0,0,0.06);
+    backdrop-filter: blur(4px);
+    transform-origin:center;
+    animation:heroIn .6s ease;
+  }
+  @keyframes heroIn{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:none } }
 
-    /* HERO SECTION */
-    .hero {
-      height: 450px;
-      background: url('https://images.unsplash.com/photo-1600473763807-6defe0d19f49?auto=format') no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: white;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-      animation: fadeInHero 1.5s ease;
-    }
+  .hero-left{ flex:1 1 60% }
+  .kicker{ color:var(--brown-dark); font-weight:700; font-size:12px; letter-spacing:1px; }
+  .hero h2{ margin:8px 0 10px; font-size:34px; color:var(--brown-dark) }
+  .hero p{ margin:0 0 16px; color:var(--muted); max-width:680px; }
 
-    @keyframes fadeInHero {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+  .cta { display:flex; gap:12px; flex-wrap:wrap }
+  .btn{
+    padding:12px 18px; border-radius:12px; border:0; cursor:pointer; font-weight:700;
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  }
+  .btn-primary{ background:var(--brown-dark); color:white; }
+  .btn-ghost{ background:transparent; color:var(--brown-dark); border:2px solid rgba(90,53,30,0.12); }
+  .btn:hover{ transform: translateY(-6px); box-shadow:0 22px 48px rgba(0,0,0,0.12) }
 
-    .hero h1 {
-      font-size: 52px;
-      margin: 0;
-      font-weight: 700;
-      animation: slideUp 1.4s ease;
-    }
+  .hero-right{ width:300px; flex-shrink:0; display:flex; flex-direction:column; gap:12px; align-items:stretch }
+  .info-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
+    border-radius:12px; padding:12px; text-align:left; box-shadow:0 10px 30px rgba(0,0,0,0.04);
+  }
+  .info-card h4{ margin: 0 0 6px; color:var(--brown-dark) }
+  .info-card p{ margin:0; color:var(--muted); font-size:13px }
 
-    .hero p {
-      font-size: 22px;
-      margin-top: 10px;
-      animation: fadeIn 2s ease;
-    }
+  /* Mission Section (large glass card) */
+  .mission{
+    margin-top:20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
+    border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
+    display:flex; gap:20px; align-items:flex-start; backdrop-filter: blur(6px);
+  }
+  .mission img{
+    width:320px; height:210px; object-fit:cover; border-radius:10px;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  }
+  .mission .text h3{ margin:0; color:var(--brown-dark) }
+  .mission .text p{ color:#3b2b22; margin-top:10px; line-height:1.65 }
 
-    @keyframes slideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+  .mission .cta { margin-top:14px }
 
-    /* SECTIONS */
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-      animation: fadeInSection 1.3s ease;
-    }
+  /* Crafts cards */
+  .cards{ display:flex; gap:18px; flex-wrap:wrap; margin-top:26px; justify-content:center }
+  .card{
+    width:280px; border-radius:14px; overflow:hidden; background:white;
+    box-shadow:0 14px 36px rgba(0,0,0,0.06); transition: transform .24s ease, box-shadow .24s ease;
+  }
+  .card:hover{ transform:translateY(-12px); box-shadow:0 30px 68px rgba(0,0,0,0.12) }
+  .card img{ width:100%; height:180px; object-fit:cover }
+  .card .body{ padding:14px }
+  .card h4{ margin:8px 0 6px; color:var(--brown-dark) }
+  .card p{ margin:0; color:var(--muted) }
 
-    @keyframes fadeInSection {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  /* Footer */
+  footer{
+    margin-top:40px; padding:20px; text-align:center; color:#fff; background:linear-gradient(90deg,var(--brown-mid),var(--accent));
+  }
 
-    .section h2 {
-      font-size: 32px;
-      margin-bottom: 15px;
-      color: #8b4513;
-      font-weight: 700;
-    }
+  /* Floating donate button */
+  .float-donate{
+    position:fixed; right:18px; bottom:24px; z-index:120;
+    border-radius:80px; padding:14px 18px; display:flex; align-items:center; gap:10px;
+    background: linear-gradient(90deg,var(--brown-mid),var(--accent)); color:white; box-shadow:0 20px 50px rgba(0,0,0,0.18);
+    cursor:pointer; font-weight:800; transition:transform .16s ease;
+  }
+  .float-donate:hover{ transform: translateY(-6px) }
 
-    .section p {
-      max-width: 750px;
-      margin: auto;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #fff;
-    }
+  /* Glass popup */
+  .popup-bg{ display:none; position:fixed; inset:0; background: rgba(10,10,10,0.45); z-index:200; align-items:center; justify-content:center; }
+  .popup{
+    width:340px; max-width:92%; background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.64));
+    border-radius:16px; padding:18px; text-align:center; box-shadow:0 28px 80px rgba(0,0,0,0.28); backdrop-filter: blur(8px);
+    transform: translateY(8px); animation:popIn .28s cubic-bezier(.2,.9,.27,1);
+  }
+  @keyframes popIn{ from{ transform: translateY(18px) scale(.98); opacity:0 } to{ transform:none; opacity:1 } }
+  .popup h3{ margin:6px 0 6px; color:var(--brown-dark) }
+  .qr{ width:240px; height:240px; object-fit:contain; border-radius:12px; margin:10px auto; display:block; background:#fff; padding:6px }
+  .popup p.muted{ color:var(--muted); font-size:14px; margin-top:6px }
+  .popup .close-btn{ margin-top:12px; padding:10px 14px; border-radius:10px; border:0; background:var(--brown-dark); color:white; cursor:pointer }
 
-    /* CARDS */
-    .cards {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .card {
-      background: white;
-      width: 300px;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-      transition: 0.3s;
-      animation: fadeInCard 1.3s ease;
-    }
-
-    @keyframes fadeInCard {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .card:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card h3 {
-      margin: 15px 0 5px;
-      font-size: 22px;
-      color: #5a351e;
-    }
-
-    .card p {
-      padding: 0 20px 20px;
-      font-size: 16px;
-      color: #555;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #8b4513;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      margin-top: 50px;
-      font-size: 16px;
-      animation: fadeIn 2s ease;
-    }
-  </style>
+  /* responsiveness */
+  @media(max-width:880px){
+    .hero{ flex-direction:column; align-items:stretch }
+    .hero-right{ width:100% }
+    .mission{ flex-direction:column }
+    .mission img{ width:100%; height:200px }
+    .cards{ justify-content:center }
+    .float-donate{ right:12px; left:auto; bottom:18px; padding:12px 14px }
+  }
+</style>
 </head>
 <body>
 
   <header>
-    VanaMala
-    <div class="quote">"Bringing tribal art to every heart"</div>
+    <h1>VanaMala</h1>
+    <div class="sub">"Bringing tribal art to every heart"</div>
   </header>
 
-  <div class="hero">
-    <h1>Discover Tribal Art</h1>
-    <p>Authentic • Handmade • Meaningful</p>
-  </div>
+  <main>
+    <!-- Hero -->
+    <section class="hero" aria-label="Intro">
+      <div class="hero-left">
+        <div class="kicker">AUTHENTIC • HANDMADE • IMPACT</div>
+        <h2>Discover tribal crafts that change lives</h2>
+        <p>We buy clay toys and crafts directly from tribal artisans at fair prices, then use the profits to run life-saving safety sessions in remote schools and support community needs.</p>
 
-  <!-- CLICKABLE OUR MISSION -->
-  <div class="section">
-    <h2>
-      <a href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" style="color:#4b1e0a; text-decoration:none; cursor:pointer;">
-        Our Mission
-      </a>
-    </h2>
-    <p>
-      We empower tribal artists by buying their beautiful clay toys and crafts at fair prices.
-      The money earned helps us visit remote schools, teach them about safety, and inspire confidence.
-      Every product you buy supports a village and builds a safer tomorrow.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2><span style="color:#4b1e0a;">Crafts We Bring</span></h2>
-
-    <div class="cards">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format" />
-        <h3>Clay Toys</h3>
-        <p>Handcrafted clay toys carrying the warmth of Indian villages.</p>
+        <div class="cta">
+          <button class="btn btn-primary" id="donateTop">Donate Now</button>
+          <a class="btn btn-ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" style="text-decoration:none;">Read Our Mission</a>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format" />
-        <h3>Folk Paintings</h3>
-        <p>Unique traditional art celebrating culture and stories.</p>
-      </div>
+      <div class="hero-right">
+        <div class="info-card">
+          <h4>Quick Facts</h4>
+          <p><strong>Buy fair • Teach safety</strong><br>Every product funds an awareness visit.</p>
+        </div>
 
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1508556497405-ed7dcd94ac68?auto=format" />
-        <h3>Decor Pieces</h3>
-        <p>Beautiful handmade decor crafted with love and care.</p>
+        <div class="info-card" style="margin-top:10px">
+          <h4>UPI</h4>
+          <p style="font-weight:700; color:var(--brown-dark); margin-top:6px;">akscosouth@okhdfcbank</p>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="mission" aria-labelledby="missionTitle">
+      <img src="/mnt/data/b449716e-1dae-4e30-b6c3-32e600f8189f.png" alt="Village craft making">
+      <div class="text">
+        <h3 id="missionTitle">Our Mission</h3>
+        <p><strong>Every year, over 8,000+ people lose their lives in India due to man-made disasters, remote-village accidents, floods, fires and lack of emergency awareness.</strong></p>
+
+        <p>Many tribal children grow up without safety education, without support, and without hope. We buy clay toys and crafts at fair prices so tribal artists earn more — and we use the profits to travel to remote schools and teach simple, life-saving safety steps:</p>
+
+        <ul style="margin-top:10px; color:#3b2b22">
+          <li>How to stay safe during an earthquake</li>
+          <li>How to exit safely during a fire</li>
+          <li>Basic flood preparedness and calm response</li>
+        </ul>
+
+        <div class="cta">
+          <button class="btn btn-primary" id="donateInCard">Donate Now</button>
+          <a class="btn btn-ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" style="text-decoration:none;">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Crafts -->
+    <section style="margin-top:26px; text-align:center;">
+      <h3 style="color:var(--brown-dark); margin-bottom:10px;">Crafts We Bring</h3>
+      <div class="cards" aria-label="Products">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format&fit=crop&w=900&q=60" alt="Clay toys">
+          <div class="body">
+            <h4>Clay Toys</h4>
+            <p>Handcrafted clay toys carrying the warmth of Indian villages.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=900&q=60" alt="Folk paintings">
+          <div class="body">
+            <h4>Folk Paintings</h4>
+            <p>Unique traditional art celebrating culture and stories.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1508556497405-ed7dcd94ac68?auto=format&fit=crop&w=900&q=60" alt="Decor">
+          <div class="body">
+            <h4>Decor Pieces</h4>
+            <p>Beautiful handmade decor crafted with love and care.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
 
   <footer>
     © 2025 VanaMala — Supporting Tribal Communities
   </footer>
 
-  <!-- Donation Button -->
-  <div style="text-align:center; margin:40px;">
-    <button id="donateBtn" style="padding:15px 30px; background:#4b1e0a; color:white; border:none; border-radius:12px; font-size:20px; cursor:pointer;">Donate</button>
+  <!-- floating donate -->
+  <div class="float-donate" id="floatDonate" role="button" aria-label="Donate">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 10px rgba(0,0,0,0.14))">
+      <path d="M12 21s8-4.35 8-10.5S15.5 3 12 6 4 4.5 4 10.5 12 21 12 21z" fill="white"/>
+    </svg>
+    Donate
   </div>
 
-  <!-- Popup -->
-  <div id="donationPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); justify-content:center; align-items:center;">
-    <div style="background:white; padding:30px; border-radius:20px; width:320px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.3); animation:pop 0.3s ease;">
-      <h2 style="color:#4b1e0a;">Support Our Mission</h2>
-      <p>Scan the UPI QR or use the ID below:</p>
-      <img src="YOUR_QR_IMAGE.png" style="width:200px; border-radius:10px; margin:10px 0;" />
-      <p style="font-weight:bold;">vanamala@upi</p>
-      <button id="closePopup" style="margin-top:15px; padding:10px 20px; background:#4b1e0a; color:white; border:none; border-radius:10px; cursor:pointer;">Close</button>
+  <!-- glass popup -->
+  <div id="donationPopup" class="popup-bg" role="dialog" aria-hidden="true">
+    <div class="popup" role="document" aria-labelledby="donateTitle">
+      <h3 id="donateTitle">Support Our Mission</h3>
+      <p style="margin:6px 0"><strong>UPI ID:</strong> akscosouth@okhdfcbank</p>
+
+      <img class="qr" src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="UPI QR code">
+
+      <p class="muted">Scan with any UPI app to donate securely.<br> OR copy the UPI ID and pay from your app.</p>
+
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
+        <button class="close-btn" id="copyBtn">Copy UPI</button>
+        <button class="close-btn" id="closeBtn" style="background:transparent; border:2px solid rgba(90,53,30,0.12); color:var(--brown-dark)">Close</button>
+      </div>
     </div>
   </div>
 
-  <script>
-    const donateBtn = document.getElementById('donateBtn');
-    const popup = document.getElementById('donationPopup');
-    const closePopup = document.getElementById('closePopup');
+<script>
+  // Openers
+  const donationPopup = document.getElementById('donationPopup');
+  const floatDonate = document.getElementById('floatDonate');
+  const donateTop = document.getElementById('donateTop');
+  const donateInCard = document.getElementById('donateInCard');
+  const copyBtn = document.getElementById('copyBtn');
+  const closeBtn = document.getElementById('closeBtn');
 
-    donateBtn.onclick = () => popup.style.display = 'flex';
-    closePopup.onclick = () => popup.style.display = 'none';
-  </script>
+  function openPopup(){ donationPopup.style.display = 'flex'; donationPopup.setAttribute('aria-hidden','false'); }
+  function closePopup(){ donationPopup.style.display = 'none'; donationPopup.setAttribute('aria-hidden','true'); }
+
+  floatDonate.addEventListener('click', openPopup);
+  donateTop.addEventListener('click', openPopup);
+  donateInCard.addEventListener('click', openPopup);
+  closeBtn.addEventListener('click', closePopup);
+
+  // copy UPI
+  copyBtn.addEventListener('click', () => {
+    const upi = 'akscosouth@okhdfcbank';
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(upi).then(()=> {
+        copyBtn.textContent = 'Copied ✓';
+        copyBtn.style.background = 'var(--brown-dark)';
+        setTimeout(()=>{ copyBtn.textContent='Copy UPI'; copyBtn.style.background=''; }, 1800);
+      }).catch(()=>{ alert('Copy failed — please long-press the UPI ID to copy.'); });
+    } else {
+      alert('Copy not supported — please long-press the UPI ID to copy.');
+    }
+  });
+
+  // close by clicking outside
+  window.addEventListener('click', (e) => {
+    if(e.target === donationPopup) closePopup();
+  });
+
+  // small entrance animation for floating donate (subtle)
+  setTimeout(()=> floatDonate.style.transform = 'translateY(-6px)', 600);
+</script>
 
 </body>
 </html>
-
