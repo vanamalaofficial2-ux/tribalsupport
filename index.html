@@ -1,305 +1,507 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>VanaMala — Tribal Art & Safety</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VanaMala — Tribal Art & Safety (Redesign)</title>
+  <meta name="description" content="VanaMala — We buy tribal crafts fairly and run safety awareness programs in remote schools." />
+  <meta name="theme-color" content="#3f2b20">
 
-<style>
+  <!--
+    VanaMala - Single file modern theme
+    - Preserves all your original text content and UPI details
+    - New visual language: deep-earth premium theme, smooth interactions
+    - Donate popup is glassmorphism style, accessible
+    - Contact click-to-call integrated
+    - Many small transitions and defensive JS checks to avoid crashes
+  -->
+
+  <style>
+  /* --------------- CSS: THEME & RESET --------------- */
   :root{
-    --bg1: #f7f4ef;
-    --brown-dark: #5a351e;
-    --brown-mid: #8b4513;
-    --accent: #c68b3b;
-    --glass: rgba(255,255,255,0.55);
-    --glass-strong: rgba(255,255,255,0.84);
-    --muted: #5b4a3f;
-    --shadow: 0 12px 40px rgba(0,0,0,0.12);
-    --radius: 14px;
+    /* earth tones */
+    --bg-1: #f7f3ee;
+    --surface: #fffdf9;
+    --deep: #362116;
+    --warm: #8b4f2f;
+    --accent: #c88a3e;
+    --muted: #6b5a4f;
+    --glass: rgba(255,255,255,0.7);
+    --glass-2: rgba(255,255,255,0.88);
+    --card-shadow: 0 18px 48px rgba(38,28,20,0.09);
+    --glass-shadow: 0 20px 60px rgba(0,0,0,0.16);
+    --radius: 16px;
+    --max-width: 1150px;
   }
-
-  *{box-sizing:border-box}
+  /* base reset */
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
   body{
     margin:0;
-    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(135deg, #f5efe6 0%, #efe7db 40%, #f3efe8 100%);
-    color: #2a1f18;
+    font-family: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    line-height:1.5;
+    background:
+      linear-gradient(180deg, #f9f6f2 0%, #efe8dd 40%, #f6f2ec 100%);
+    color:var(--deep);
+    line-height:1.55;
+    -webkit-touch-callout: none;
   }
 
-  /* Header */
-  header{
-    background: linear-gradient(90deg,var(--brown-mid),var(--accent));
-    color: white;
-    padding:28px 18px;
-    text-align:center;
-    font-style:italic;
-    box-shadow: var(--shadow);
+  /* container center */
+  .wrap{max-width:var(--max-width);margin:32px auto;padding:18px}
+
+  /* ---------- Top header ---------- */
+  header.app-header{
+    background: linear-gradient(90deg,var(--warm),var(--accent));
+    color:white;
+    border-radius: 14px;
+    padding:28px 22px;
+    box-shadow: var(--glass-shadow);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
   }
-  header h1{ margin:0; font-size:30px; letter-spacing:0.6px; }
-  header .sub{ margin-top:6px; font-size:14px; opacity:0.95; }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .logo-mark{
+    width:58px;height:58px;border-radius:10px;
+    background:rgba(255,255,255,0.12);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:rgba(255,255,255,0.95);
+    font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  }
+  .brand h1{font-size:22px;margin:0;font-weight:800;letter-spacing:0.6px}
+  .brand p{margin:0;font-size:13px;opacity:0.95}
 
-  /* container */
-  main{ max-width:1100px; margin:-48px auto 60px; padding:20px; }
+  /* small nav / status */
+  .header-actions{display:flex;gap:12px;align-items:center}
+  .small-pill{
+    background:rgba(255,255,255,0.12);padding:10px 12px;border-radius:999px;font-weight:700;font-size:13px;
+    color:white;box-shadow:0 6px 18px rgba(0,0,0,0.08)
+  }
 
-  /* Hero */
+  /* ---------- HERO ---------- */
   .hero{
-    display:flex; gap:24px; align-items:center;
-    padding:28px; border-radius:16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
-    box-shadow:0 18px 46px rgba(0,0,0,0.06);
-    backdrop-filter: blur(4px);
-    transform-origin:center;
-    animation:heroIn .6s ease;
-  }
-  @keyframes heroIn{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:none } }
-
-  .hero-left{ flex:1 1 60% }
-  .kicker{ color:var(--brown-dark); font-weight:700; font-size:12px; letter-spacing:1px; }
-  .hero h2{ margin:8px 0 10px; font-size:34px; color:var(--brown-dark) }
-  .hero p{ margin:0 0 16px; color:var(--muted); max-width:680px; }
-
-  .cta { display:flex; gap:12px; flex-wrap:wrap }
-  .btn{
-    padding:12px 18px; border-radius:12px; border:0; cursor:pointer; font-weight:700;
-    transition: transform .18s ease, box-shadow .18s ease;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-  }
-  .btn-primary{ background:var(--brown-dark); color:white; }
-  .btn-ghost{ background:transparent; color:var(--brown-dark); border:2px solid rgba(90,53,30,0.12); }
-  .btn:hover{ transform: translateY(-6px); box-shadow:0 22px 48px rgba(0,0,0,0.12) }
-
-  .hero-right{ width:300px; flex-shrink:0; display:flex; flex-direction:column; gap:12px; align-items:stretch }
-  .info-card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
-    border-radius:12px; padding:12px; text-align:left; box-shadow:0 10px 30px rgba(0,0,0,0.04);
-  }
-  .info-card h4{ margin: 0 0 6px; color:var(--brown-dark) }
-  .info-card p{ margin:0; color:var(--muted); font-size:13px }
-
-  /* Mission Section (large glass card) */
-  .mission{
+    display:flex;
+    gap:28px;
     margin-top:20px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
-    border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
-    display:flex; gap:20px; align-items:flex-start; backdrop-filter: blur(6px);
+    align-items:center;
+    background: linear-gradient(180deg, var(--glass-2), rgba(255,255,255,0.88));
+    border-radius: var(--radius);
+    padding:30px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(6px);
+    animation: heroIntro .7s ease;
   }
-  .mission img{
-    width:320px; height:210px; object-fit:cover; border-radius:10px;
-    box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  @keyframes heroIntro{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .hero-left{flex:1}
+  .kicker{display:inline-block;background:rgba(74,46,28,0.06);padding:8px 12px;border-radius:10px;color:var(--warm);font-weight:800;font-size:12px;letter-spacing:0.6px}
+  h2.hero-title{font-size:34px;margin:14px 0;color:var(--deep);line-height:1.08}
+  p.lead{color:var(--muted);margin:0 0 14px;max-width:68ch;font-size:15px}
+
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    padding:12px 18px;border-radius:12px;border:0;font-weight:800;cursor:pointer;font-size:14px;
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
   }
-  .mission .text h3{ margin:0; color:var(--brown-dark) }
-  .mission .text p{ color:#3b2b22; margin-top:10px; line-height:1.65 }
+  .btn.primary{background:var(--deep);color:white}
+  .btn.ghost{background:transparent;color:var(--deep);border:2px solid rgba(55,38,28,0.08)}
 
-  .mission .cta { margin-top:14px }
+  .btn.primary:hover{transform:translateY(-6px)}
+  .btn.ghost:hover{transform:translateY(-6px)}
 
-  /* Crafts cards */
-  .cards{ display:flex; gap:18px; flex-wrap:wrap; margin-top:26px; justify-content:center }
-  .card{
-    width:280px; border-radius:14px; overflow:hidden; background:white;
-    box-shadow:0 14px 36px rgba(0,0,0,0.06); transition: transform .24s ease, box-shadow .24s ease;
+  .hero-right{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:14px}
+  .info{
+    background:white;padding:14px;border-radius:12px;box-shadow:0 12px 34px rgba(0,0,0,0.06)
   }
-  .card:hover{ transform:translateY(-12px); box-shadow:0 30px 68px rgba(0,0,0,0.12) }
-  .card img{ width:100%; height:180px; object-fit:cover }
-  .card .body{ padding:14px }
-  .card h4{ margin:8px 0 6px; color:var(--brown-dark) }
-  .card p{ margin:0; color:var(--muted) }
+  .info h4{margin:0 0 6px;color:var(--deep);font-size:15px}
+  .info p{margin:0;color:var(--muted);font-size:13px}
 
-  /* Footer */
-  footer{
-    margin-top:40px; padding:20px; text-align:center; color:#fff; background:linear-gradient(90deg,var(--brown-mid),var(--accent));
+  /* ---------- MISSION (big card with image) ---------- */
+  .mission{
+    margin-top:28px;
+    display:flex;
+    gap:26px;
+    align-items:flex-start;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+    padding:26px;border-radius:14px;box-shadow:var(--card-shadow);
+    animation: floatIn .7s ease;
   }
+  @keyframes floatIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .mission .photo{
+    width:420px;height:260px;flex-shrink:0;border-radius:12px;overflow:hidden;
+    box-shadow:0 10px 36px rgba(0,0,0,0.12);
+  }
+  .mission .photo img{width:100%;height:100%;object-fit:cover}
+  .mission .body{flex:1}
+  .mission h3{margin:0;font-size:26px;color:var(--deep)}
+  .mission p{color:var(--muted);margin-top:12px}
+  .mission ul{margin-top:12px;color:#3b2b22;line-height:1.6}
 
-  /* Floating donate button */
+  /* ---------- PRODUCTS GRID ---------- */
+  .products{
+    margin-top:30px;text-align:center;
+  }
+  .products h3{color:var(--deep);font-size:26px;margin-bottom:12px}
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:20px;
+    align-items:stretch;
+    margin-top:18px;
+  }
+  .product-card{
+    background:white;border-radius:14px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.06);
+    transition:transform .32s ease, box-shadow .32s ease;
+  }
+  .product-card:hover{transform:translateY(-12px);box-shadow:0 36px 80px rgba(0,0,0,0.12)}
+  .product-card img{width:100%;height:200px;object-fit:cover}
+  .product-card .pbody{padding:16px}
+  .product-card h4{margin:0 0 8px;color:var(--deep)}
+  .product-card p{margin:0;color:var(--muted);font-size:14px}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer.site-footer{
+    margin-top:48px;background:linear-gradient(90deg,var(--warm),var(--accent));color:white;padding:26px;border-radius:12px;
+    text-align:center;font-weight:700;
+  }
+  .contacts{
+    display:flex;gap:14px;justify-content:center;margin-top:10px;flex-wrap:wrap;
+  }
+  .call-pill{background:rgba(255,255,255,0.12);padding:10px 14px;border-radius:12px;color:white;text-decoration:none;font-weight:800}
+
+  /* ---------- Floating Donate Button ---------- */
   .float-donate{
-    position:fixed; right:18px; bottom:24px; z-index:120;
-    border-radius:80px; padding:14px 18px; display:flex; align-items:center; gap:10px;
-    background: linear-gradient(90deg,var(--brown-mid),var(--accent)); color:white; box-shadow:0 20px 50px rgba(0,0,0,0.18);
-    cursor:pointer; font-weight:800; transition:transform .16s ease;
+    position:fixed;right:22px;bottom:26px;background:linear-gradient(90deg,var(--warm),var(--accent));
+    color:white;padding:14px 18px;border-radius:999px;display:flex;align-items:center;gap:10px;cursor:pointer;
+    box-shadow:0 28px 60px rgba(0,0,0,0.22);z-index:9999;font-weight:800;transition:transform .18s ease;
   }
-  .float-donate:hover{ transform: translateY(-6px) }
+  .float-donate:hover{transform:translateY(-8px)}
 
-  /* Glass popup */
-  .popup-bg{ display:none; position:fixed; inset:0; background: rgba(10,10,10,0.45); z-index:200; align-items:center; justify-content:center; }
+  /* ---------- Popup (glass) ---------- */
+  .popup-wrap{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,8,8,0.5);z-index:9998}
   .popup{
-    width:340px; max-width:92%; background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.64));
-    border-radius:16px; padding:18px; text-align:center; box-shadow:0 28px 80px rgba(0,0,0,0.28); backdrop-filter: blur(8px);
-    transform: translateY(8px); animation:popIn .28s cubic-bezier(.2,.9,.27,1);
+    width:400px;max-width:92%;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.86));
+    border-radius:14px;padding:20px;text-align:center;box-shadow:var(--glass-shadow);backdrop-filter:blur(8px)
   }
-  @keyframes popIn{ from{ transform: translateY(18px) scale(.98); opacity:0 } to{ transform:none; opacity:1 } }
-  .popup h3{ margin:6px 0 6px; color:var(--brown-dark) }
-  .qr{ width:240px; height:240px; object-fit:contain; border-radius:12px; margin:10px auto; display:block; background:#fff; padding:6px }
-  .popup p.muted{ color:var(--muted); font-size:14px; margin-top:6px }
-  .popup .close-btn{ margin-top:12px; padding:10px 14px; border-radius:10px; border:0; background:var(--brown-dark); color:white; cursor:pointer }
+  .popup h3{margin:10px 0;color:var(--deep)}
+  .qr{width:260px;height:260px;object-fit:contain;margin:8px auto;border-radius:10px;background:white;padding:8px}
+  .popup p.note{color:var(--muted);font-size:14px;margin-top:6px}
+  .popup .actions{display:flex;gap:10px;justify-content:center;margin-top:12px}
+  .sm-btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+  .sm-btn.primary{background:var(--deep);color:white}
+  .sm-btn.ghost{background:white;border:2px solid rgba(0,0,0,0.06);color:var(--deep)}
 
-  /* responsiveness */
-  @media(max-width:880px){
-    .hero{ flex-direction:column; align-items:stretch }
-    .hero-right{ width:100% }
-    .mission{ flex-direction:column }
-    .mission img{ width:100%; height:200px }
-    .cards{ justify-content:center }
-    .float-donate{ right:12px; left:auto; bottom:18px; padding:12px 14px }
+  /* ---------- Accessibility focus styles ---------- */
+  a:focus, button:focus, input:focus{outline:3px solid rgba(200,138,62,0.18);outline-offset:2px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .mission{flex-direction:column}
+    .mission .photo{width:100%;height:240px}
+    .hero{flex-direction:column}
+    .hero-right{width:100%}
   }
-</style>
+  @media (max-width:600px){
+    .grid{grid-template-columns:1fr}
+    header.app-header{flex-direction:column;align-items:flex-start;gap:12px}
+    .brand h1{font-size:20px}
+    .hero-left h2{font-size:24px}
+    .mission .photo{height:200px}
+  }
+
+  /* ---------- small helpers & spacing for printout ----- */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .muted{color:var(--muted)}
+  .center{text-align:center}
+  </style>
 </head>
 <body>
 
-  <header>
-    <h1>VanaMala</h1>
-    <div class="sub">"Bringing tribal art to every heart"</div>
-  </header>
+  <div class="wrap">
 
-  <main>
-    <!-- Hero -->
-    <section class="hero" aria-label="Intro">
-      <div class="hero-left">
-        <div class="kicker">AUTHENTIC • HANDMADE • IMPACT</div>
-        <h2>Discover tribal crafts that change lives</h2>
-        <p>We buy clay toys and crafts directly from tribal artisans at fair prices, then use the profits to run life-saving safety sessions in remote schools and support community needs.</p>
-
-        <div class="cta">
-          <button class="btn btn-primary" id="donateTop">Donate Now</button>
-          <a class="btn btn-ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" style="text-decoration:none;">Read Our Mission</a>
+    <!-- HEADER -->
+    <header class="app-header" role="banner" aria-label="VanaMala header">
+      <div class="brand" aria-hidden="false">
+        <div class="logo-mark">VM</div>
+        <div>
+          <h1>VanaMala</h1>
+          <p class="sr-only">Bringing tribal art to every heart</p>
         </div>
       </div>
 
-      <div class="hero-right">
-        <div class="info-card">
+      <div class="header-actions" role="navigation" aria-label="Top actions">
+        <div class="small-pill">Authentic • Handmade • Impact</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a class="small-pill" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" target="_blank" rel="noopener">Our Mission</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <div class="kicker">AUTHENTIC • HANDMADE • IMPACT</div>
+        <h2 id="hero-title" class="hero-title">Discover tribal crafts that change lives</h2>
+        <p class="lead">We buy clay toys and crafts directly from tribal artisans at fair prices, then use the profits to run life-saving safety sessions in remote schools and support community needs.</p>
+
+        <div class="cta-row" role="group" aria-label="Primary actions">
+          <button class="btn primary" id="donateTop">Donate Now</button>
+          <a class="btn ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" target="_blank" rel="noopener">Read Our Mission</a>
+        </div>
+      </div>
+
+      <aside class="hero-right" aria-labelledby="quick-facts">
+        <div class="info" id="quick-facts">
           <h4>Quick Facts</h4>
           <p><strong>Buy fair • Teach safety</strong><br>Every product funds an awareness visit.</p>
         </div>
 
-        <div class="info-card" style="margin-top:10px">
+        <div class="info" aria-hidden="false">
           <h4>UPI</h4>
-          <p style="font-weight:700; color:var(--brown-dark); margin-top:6px;">akscosouth@okhdfcbank</p>
+          <p style="font-weight:700;color:var(--deep)">akscosouth@okhdfcbank</p>
         </div>
-      </div>
+      </aside>
     </section>
 
-    <!-- Mission -->
+    <!-- MISSION -->
     <section class="mission" aria-labelledby="missionTitle">
-      <img src="/mnt/data/b449716e-1dae-4e30-b6c3-32e600f8189f.png" alt="Village craft making">
-      <div class="text">
+      <figure class="photo" aria-hidden="true">
+        <!-- local path 'mission.png' is used in your repo; replace if required -->
+        <img src="mission.png" alt="Village craft making photo (VanaMala mission image)" onerror="this.style.opacity=0.6; this.src='https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format&fit=crop&w=900&q=60'">
+      </figure>
+
+      <div class="body">
         <h3 id="missionTitle">Our Mission</h3>
+
         <p><strong>Every year, over 8,000+ people lose their lives in India due to man-made disasters, remote-village accidents, floods, fires and lack of emergency awareness.</strong></p>
 
         <p>Many tribal children grow up without safety education, without support, and without hope. We buy clay toys and crafts at fair prices so tribal artists earn more — and we use the profits to travel to remote schools and teach simple, life-saving safety steps:</p>
 
-        <ul style="margin-top:10px; color:#3b2b22">
+        <ul>
           <li>How to stay safe during an earthquake</li>
           <li>How to exit safely during a fire</li>
           <li>Basic flood preparedness and calm response</li>
         </ul>
 
-        <div class="cta">
-          <button class="btn btn-primary" id="donateInCard">Donate Now</button>
-          <a class="btn btn-ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" style="text-decoration:none;">Learn More</a>
+        <div style="margin-top:14px">
+          <button class="btn primary" id="donateInCard">Donate Now</button>
+          <a class="btn ghost" href="https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html" target="_blank" rel="noopener">Learn More</a>
         </div>
       </div>
     </section>
 
-    <!-- Crafts -->
-    <section style="margin-top:26px; text-align:center;">
-      <h3 style="color:var(--brown-dark); margin-bottom:10px;">Crafts We Bring</h3>
-      <div class="cards" aria-label="Products">
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format&fit=crop&w=900&q=60" alt="Clay toys">
-          <div class="body">
-            <h4>Clay Toys</h4>
+    <!-- PRODUCTS -->
+    <section class="products" aria-labelledby="productsTitle">
+      <h3 id="productsTitle">Crafts We Bring</h3>
+
+      <div class="grid" role="list">
+        <article class="product-card" role="listitem" aria-labelledby="p1">
+          <img src="https://images.unsplash.com/photo-1598387993441-019c77b5c9cc?auto=format&fit=crop&w=900&q=60" alt="Clay toys image">
+          <div class="pbody">
+            <h4 id="p1">Clay Toys</h4>
             <p>Handcrafted clay toys carrying the warmth of Indian villages.</p>
           </div>
         </article>
 
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=900&q=60" alt="Folk paintings">
-          <div class="body">
-            <h4>Folk Paintings</h4>
+        <article class="product-card" role="listitem" aria-labelledby="p2">
+          <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=900&q=60" alt="Folk paintings image">
+          <div class="pbody">
+            <h4 id="p2">Folk Paintings</h4>
             <p>Unique traditional art celebrating culture and stories.</p>
           </div>
         </article>
 
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1508556497405-ed7dcd94ac68?auto=format&fit=crop&w=900&q=60" alt="Decor">
-          <div class="body">
-            <h4>Decor Pieces</h4>
+        <article class="product-card" role="listitem" aria-labelledby="p3">
+          <img src="https://images.unsplash.com/photo-1508556497405-ed7dcd94ac68?auto=format&fit=crop&w=900&q=60" alt="Decor pieces image">
+          <div class="pbody">
+            <h4 id="p3">Decor Pieces</h4>
             <p>Beautiful handmade decor crafted with love and care.</p>
           </div>
         </article>
       </div>
     </section>
 
-  </main>
+    <!-- CONTACT -->
+    <section aria-labelledby="contactTitle" style="margin-top:28px;text-align:center">
+      <h3 id="contactTitle" style="margin-bottom:8px;color:var(--deep)">Contact Us</h3>
+      <div class="contacts" role="group" aria-label="Contact numbers">
+        <a class="call-pill" href="tel:9246780138" aria-label="Call 9246780138">📞 9246780138</a>
+        <a class="call-pill" href="tel:6303795998" aria-label="Call 6303795998">📞 6303795998</a>
+        <a class="call-pill" href="mailto:vanamalaofficial2@gmail.com" aria-label="Email vanamalaofficial2">✉️ Email Us</a>
+      </div>
+    </section>
 
-  <footer>
-    © 2025 VanaMala — Supporting Tribal Communities
-  </footer>
+    <!-- FOOTER -->
+    <footer class="site-footer" role="contentinfo">
+      © 2025 VanaMala — Supporting Tribal Communities
+    </footer>
+  </div> <!-- .wrap -->
 
-  <!-- floating donate -->
-  <div class="float-donate" id="floatDonate" role="button" aria-label="Donate">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 10px rgba(0,0,0,0.14))">
+  <!-- Floating donate -->
+  <div class="float-donate" id="floatDonate" role="button" aria-label="Donate now button">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 21s8-4.35 8-10.5S15.5 3 12 6 4 4.5 4 10.5 12 21 12 21z" fill="white"/>
     </svg>
     Donate
   </div>
 
-  <!-- glass popup -->
-  <div id="donationPopup" class="popup-bg" role="dialog" aria-hidden="true">
+  <!-- Popup markup (keeps UPI + QR) -->
+  <div class="popup-wrap" id="donationPopup" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="popup" role="document" aria-labelledby="donateTitle">
       <h3 id="donateTitle">Support Our Mission</h3>
-      <p style="margin:6px 0"><strong>UPI ID:</strong> akscosouth@okhdfcbank</p>
+      <p style="margin:8px 0;"><strong>UPI ID:</strong> akscosouth@okhdfcbank</p>
 
-      <img class="qr" src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="UPI QR code">
+      <!-- QR image from your GitHub link -->
+      <img class="qr" src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="UPI QR code for akscosouth@okhdfcbank" onerror="this.alt='UPI QR image failed to load'">
 
-      <p class="muted">Scan with any UPI app to donate securely.<br> OR copy the UPI ID and pay from your app.</p>
+      <p class="note">Scan with any UPI app to donate securely. OR copy the UPI ID and pay from your app.</p>
 
-      <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
-        <button class="close-btn" id="copyBtn">Copy UPI</button>
-        <button class="close-btn" id="closeBtn" style="background:transparent; border:2px solid rgba(90,53,30,0.12); color:var(--brown-dark)">Close</button>
+      <div class="actions" role="group" aria-label="Donation actions">
+        <button class="sm-btn primary" id="copyBtn">Copy UPI</button>
+        <button class="sm-btn ghost" id="closeBtn">Close</button>
       </div>
     </div>
   </div>
 
 <script>
-  // Openers
-  const donationPopup = document.getElementById('donationPopup');
-  const floatDonate = document.getElementById('floatDonate');
-  const donateTop = document.getElementById('donateTop');
-  const donateInCard = document.getElementById('donateInCard');
-  const copyBtn = document.getElementById('copyBtn');
-  const closeBtn = document.getElementById('closeBtn');
+/* --------------- JS: Behaviour & Defensive Guards --------------- */
+/*
+  Purpose:
+  - Open/close donate popup
+  - Copy UPI safely with fallback
+  - Prevent errors if elements missing
+  - Provide friendly feedback
+*/
 
-  function openPopup(){ donationPopup.style.display = 'flex'; donationPopup.setAttribute('aria-hidden','false'); }
-  function closePopup(){ donationPopup.style.display = 'none'; donationPopup.setAttribute('aria-hidden','true'); }
+/* helper: safe query */
+function $id(id){ try{return document.getElementById(id)}catch(e){return null} }
 
-  floatDonate.addEventListener('click', openPopup);
-  donateTop.addEventListener('click', openPopup);
-  donateInCard.addEventListener('click', openPopup);
-  closeBtn.addEventListener('click', closePopup);
+/* elements */
+const popupWrap = $id('donationPopup');
+const floatBtn = $id('floatDonate');
+const donateTop = $id('donateTop');
+const donateInCard = $id('donateInCard');
+const copyBtn = $id('copyBtn');
+const closeBtn = $id('closeBtn');
 
-  // copy UPI
-  copyBtn.addEventListener('click', () => {
+/* ensure functions don't crash if missing */
+function openPopup(){
+  if(!popupWrap) return;
+  popupWrap.style.display = 'flex';
+  popupWrap.setAttribute('aria-hidden','false');
+  // trap focus on popup for accessibility
+  setTimeout(()=> {
+    const btn = popupWrap.querySelector('button');
+    if(btn) btn.focus();
+  }, 80);
+}
+function closePopup(){
+  if(!popupWrap) return;
+  popupWrap.style.display = 'none';
+  popupWrap.setAttribute('aria-hidden','true');
+}
+
+/* event wiring with guards */
+if(floatBtn) floatBtn.addEventListener('click', openPopup);
+if(donateTop) donateTop.addEventListener('click', openPopup);
+if(donateInCard) donateInCard.addEventListener('click', openPopup);
+if(closeBtn) closeBtn.addEventListener('click', closePopup);
+
+/* copy to clipboard with fallback */
+if(copyBtn){
+  copyBtn.addEventListener('click', async function(){
     const upi = 'akscosouth@okhdfcbank';
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(upi).then(()=> {
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(upi);
+        const t = copyBtn;
+        t.textContent = 'Copied ✓';
+        t.style.background = 'var(--deep)';
+        setTimeout(()=>{ t.textContent='Copy UPI'; t.style.background=''; }, 1600);
+      } else {
+        // fallback: create temporary input
+        const tmp = document.createElement('input');
+        tmp.value = upi;
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
         copyBtn.textContent = 'Copied ✓';
-        copyBtn.style.background = 'var(--brown-dark)';
-        setTimeout(()=>{ copyBtn.textContent='Copy UPI'; copyBtn.style.background=''; }, 1800);
-      }).catch(()=>{ alert('Copy failed — please long-press the UPI ID to copy.'); });
-    } else {
-      alert('Copy not supported — please long-press the UPI ID to copy.');
+        setTimeout(()=>{ copyBtn.textContent='Copy UPI'; }, 1600);
+      }
+    } catch(err){
+      console.error('Copy failed', err);
+      alert('Copy failed. Please long-press the UPI ID on mobile to copy.');
     }
   });
+}
 
-  // close by clicking outside
-  window.addEventListener('click', (e) => {
-    if(e.target === donationPopup) closePopup();
+/* close when clicking outside popup content */
+if(popupWrap){
+  popupWrap.addEventListener('click', function(e){
+    if(e.target === popupWrap) closePopup();
   });
+}
 
-  // small entrance animation for floating donate (subtle)
-  setTimeout(()=> floatDonate.style.transform = 'translateY(-6px)', 600);
+/* keyboard escape closes popup */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && popupWrap && popupWrap.style.display === 'flex') closePopup();
+});
+
+/* small entrance effect for float button */
+setTimeout(() => {
+  if(floatBtn) floatBtn.style.transform = 'translateY(-6px)';
+}, 600);
+
+/* defensive: prevent script errors when elements not present */
+(function(){
+  // basic sanity checks - logs to console to show you ran diagnostics
+  try{
+    if(!popupWrap) console.warn('Donation popup not found - popup features disabled');
+    if(!floatBtn) console.warn('Floating donate button not found');
+    // add more diagnostic logs if needed
+  } catch(err){
+    console.error('Diagnostics error', err);
+  }
+})();
+
+/* Accessible focus trap (basic) for the popup
+   - Keeps keyboard focus inside the popup while open
+   - This is a simple implementation for demo purposes
+*/
+(function(){
+  let lastFocused = null;
+  document.addEventListener('focus', function(ev){
+    if(popupWrap && popupWrap.style.display === 'flex'){
+      if(!popupWrap.contains(ev.target)){
+        ev.stopPropagation();
+        const focusable = popupWrap.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if(focusable) focusable.focus();
+      }
+    } else {
+      // store last focused before open
+      lastFocused = ev.target;
+    }
+  }, true);
+
+  // when popup closes return focus to lastFocused
+  const origClose = closePopup;
+  closePopup = function(){
+    origClose();
+    if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  };
+})();
+
+/* End of JS */
 </script>
 
 </body>
