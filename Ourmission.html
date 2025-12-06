@@ -4,378 +4,442 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>VanaMala — Tribal Art & Safety</title>
+  <meta name="description" content="VanaMala — Fair trade & safety programs for tribal communities.">
+  <meta name="theme-color" content="#5a2e0a">
 
-  <!-- EmailJS (browser lib) -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script>
-    // initialize EmailJS with your public key (you provided earlier)
-    (function(){ emailjs.init("iYW4ODkDbG7S9-aXC"); })();
-  </script>
+  <!-- Fonts (Google) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
+    /* ===========================
+       ROOT, RESET & UTILITY
+       =========================== */
     :root{
-      --green-dark:#1f6f3a;
-      --green:#2f9e4a;
-      --muted:#666;
-      --card:#fff;
-      --bg:#f3f8f3;
-      --accent:#9cd9a1;
+      --bg: #fbf4ec;
+      --brown-1: #5a2e0a;    /* primary brown */
+      --brown-2: #c68b3b;    /* warm gold */
+      --muted: #6b5850;
+      --card: #fffefc;
+      --glass: rgba(255,255,255,0.9);
+      --radius: 14px;
+      --shadow-lg: 0 24px 80px rgba(0,0,0,0.12);
+      --shadow-sm: 0 8px 28px rgba(0,0,0,0.06);
+      --ease: cubic-bezier(.2,.9,.27,1);
+      --maxw: 1180px;
+      --focus: 3px solid rgba(198,139,60,0.12);
     }
-    * { box-sizing: border-box; }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
     body{
-      margin:0; font-family:Inter, system-ui, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg, #f7fbf7 0%, #eef7ed 100%);
-      color:#123;
-      -webkit-font-smoothing:antialiased;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Poppins", Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      background: linear-gradient(180deg,#fbf4ec 0%, #f3e9dd 60%, #efe2d4 100%);
+      color: #2f241c;
+      line-height:1.55;
+      -webkit-user-select:text;
+      -ms-text-size-adjust:100%;
     }
+
+    .container{ max-width:var(--maxw); margin:0 auto; padding:28px; }
+
+    a{ color:inherit; text-decoration:none; }
+
+    /* subtle focus ring for keyboard users */
+    :focus{ outline: var(--focus); outline-offset:4px; }
+
+    /* ===========================
+       SPLASH / INTRO (V + ANAMALA)
+       =========================== */
+    /* Full window overlay */
+    #introOverlay{
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background: var(--brown-1); z-index:9999; overflow:hidden;
+      /* ensure a subtle cinematic lines background (light) */
+      background-image: linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      flex-direction:row;
+      gap:18px;
+    }
+
+    /* Big V on left — white */
+    #introV{
+      font-family: Poppins, sans-serif;
+      font-weight:900;
+      color: #fffdf6;
+      font-size: 180px;
+      line-height: .9;
+      transform-origin:center;
+      opacity:0;
+      transform: scale(1.6);
+      /* zoom animation */
+      animation: vZoom 1.2s var(--ease) forwards;
+    }
+
+    @keyframes vZoom{
+      0% { transform: scale(2.2); opacity:0; filter: blur(8px); }
+      40% { transform: scale(1); opacity:1; filter: blur(0); }
+      100% { transform: scale(1); opacity:1; }
+    }
+
+    /* "ANAMALA" slides in from the right side of V (same row) */
+    #introText{
+      font-family:Poppins, sans-serif;
+      font-weight:700;
+      color: #fffdf6;
+      font-size: 64px;
+      letter-spacing: 2px;
+      opacity:0;
+      transform: translateX(160px);
+      animation: textSlide 1s var(--ease) forwards;
+      animation-delay: 1.05s; /* start after V zoom */
+    }
+
+    @keyframes textSlide{
+      0% { transform: translateX(160px); opacity:0 }
+      100% { transform: translateX(0); opacity:1 }
+    }
+
+    /* After both show, morph/merge (subtle) then fade overlay */
+    #introCombine{
+      position:absolute; bottom:30px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.12);
+      font-family:Inter; font-size:12px; pointer-events:none; letter-spacing:1.2px;
+      opacity:0; transform-origin:center; animation: combineIn .6s var(--ease) forwards;
+      animation-delay: 1.85s;
+    }
+    @keyframes combineIn{ to{ opacity:1 } }
+
+    /* fade overlay */
+    #introOverlay.fadeOut{
+      animation: fadeOverlay .7s ease forwards;
+      animation-delay: 0.35s;
+    }
+    @keyframes fadeOverlay{
+      to{ opacity:0; visibility:hidden; transform:translateY(-6px) }
+    }
+
+    /* ===========================
+       PAGE LAYOUT (visible after intro)
+       =========================== */
+    /* page wrapper initially hidden until intro finishes */
+    #siteRoot{ visibility:hidden; opacity:0; transform:translateY(6px); transition: all .7s var(--ease); }
+
+    #siteRoot.visible{ visibility:visible; opacity:1; transform:none; }
 
     /* Header */
-    header{
-      background: linear-gradient(90deg,var(--green-dark),var(--green));
-      color: white; padding:28px 16px; text-align:center;
-      box-shadow:0 8px 26px rgba(31,111,58,0.12);
+    header.site{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+      box-shadow: var(--shadow-sm);
+      position:sticky; top:12px; z-index:40;
     }
-    header h1{margin:0;font-size:28px}
-    header p{margin:6px 0 0;font-size:14px;opacity:.95}
-
-    main{max-width:1100px;margin:-40px auto 60px;padding:18px}
-
-    /* Hero */
-    .hero{display:flex; gap:22px; align-items:center; background:var(--card);
-      padding:22px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.06); animation:fadeUp .5s ease;}
-    .hero-left{flex:1}
-    .kicker{color:var(--green-dark); font-weight:700; font-size:12px; letter-spacing:0.6px}
-    .hero h2{margin:8px 0; font-size:26px}
-    .hero p{color:var(--muted); margin:0 0 12px; line-height:1.6}
-    .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+    .brand{ display:flex; gap:12px; align-items:center; }
+    .logo{
+      width:56px; height:56px; border-radius:12px; background: linear-gradient(180deg,var(--brown-1),var(--brown-2));
+      display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-family:Poppins;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+    }
+    .brand h1{ margin:0; font-family:Poppins; font-size:20px; color:var(--brown-1); font-weight:700 }
+    nav.actions{ display:flex; gap:12px; align-items:center; }
 
     .btn{
-      padding:12px 18px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
-      transition:transform .18s ease, box-shadow .18s ease;
-      box-shadow:0 10px 24px rgba(31,111,58,0.06);
+      padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; border:2px solid transparent;
+      transition: transform .24s var(--ease), box-shadow .24s var(--ease), background .24s var(--ease);
+      font-family:Inter;
     }
-    .btn-primary{background:var(--green-dark); color:white}
-    .btn-secondary{background:transparent; border:2px solid var(--green-dark); color:var(--green-dark)}
-    .btn:hover{transform:translateY(-4px); box-shadow:0 18px 40px rgba(31,111,58,0.12)}
+    .btn-primary{ background: linear-gradient(90deg,var(--brown-2),var(--brown-1)); color:white; box-shadow: 0 12px 36px rgba(90,45,12,0.12) }
+    .btn-ghost{ background:transparent; color:var(--brown-1); border:2px solid rgba(90,45,12,0.08) }
+    .btn:hover{ transform: translateY(-6px) }
 
-    .hero-right{width:320px; flex-shrink:0; background:linear-gradient(180deg,#f7fff7,#fff); padding:16px; border-radius:10px}
-    .quick h4{margin:0;color:var(--green-dark)}
-    .quick p{margin:8px 0 0;color:#444;font-size:14px}
+    /* HERO (Apple-clean with tribal warmth) */
+    .hero{
+      display:flex; gap:28px; align-items:stretch; margin-top:22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+      padding:36px; border-radius:16px; box-shadow:var(--shadow-lg); overflow:hidden;
+    }
+    .hero-left{ flex:1; display:flex; flex-direction:column; justify-content:center }
+    .kicker{ display:inline-block; background: rgba(198,139,60,0.07); color:var(--brown-1); padding:8px 12px; border-radius:10px; font-weight:800; font-size:12px; letter-spacing:1px }
+    h2.title{ font-family:Poppins; font-size:48px; margin:18px 0 6px; color:var(--brown-1); line-height:1.02 }
+    p.lead{ color:var(--muted); font-size:18px; max-width:720px; margin-bottom:20px }
 
-    /* cards + sections */
-    .card{background:var(--card); border-radius:12px; padding:20px; margin-top:18px; box-shadow:0 10px 30px rgba(0,0,0,0.06)}
-    .card h3{margin:0 0 8px;color:var(--green-dark)}
-    .card p{color:#444;line-height:1.7}
+    .cta-row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
 
-    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px}
+    .hero-right{ width:340px; flex-shrink:0; display:flex; flex-direction:column; gap:14px; align-items:stretch }
+    .infoCard{
+      background:var(--card); padding:16px; border-radius:12px; box-shadow:var(--shadow-sm);
+      transition: transform .36s var(--ease), box-shadow .36s var(--ease);
+    }
+    .infoCard:hover{ transform: translateY(-8px); box-shadow: 0 28px 60px rgba(0,0,0,0.08) }
 
-    /* Problems list */
-    .problems ul{padding-left:18px; color:#444}
-    .problems li{margin:8px 0; line-height:1.6}
+    /* Breakdown grid */
+    .breakdown{ margin-top:26px; padding:22px; border-radius:12px; background: linear-gradient(180deg,#fff,#fff); box-shadow:var(--shadow-sm) }
+    .grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:16px }
+    .tile{ padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98)); box-shadow:0 12px 26px rgba(0,0,0,0.04) }
 
-    /* How we help list */
-    .helps{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:10px}
+    .tile h4{ margin:0 0 8px; color:var(--brown-1) }
+    .tile p{ margin:0; color:var(--muted) }
 
-    /* counters */
-    .counters{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
-    .counter{background:linear-gradient(180deg,#fff,#f7fff7); padding:14px; border-radius:8px; text-align:center; flex:1; min-width:140px}
-    .counter h4{margin:6px 0;color:var(--green-dark); font-size:20px}
-    .counter p{margin:0;color:var(--muted)}
+    /* Footer */
+    footer{ margin-top:36px; text-align:center; color:var(--muted); padding:28px 0 }
 
-    /* gallery */
-    .gallery{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .thumb{flex:1 1 160px; min-height:110px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999}
+    /* Modal */
+    .modal-backdrop{ display:none; position:fixed; inset:0; background: rgba(10,10,10,0.45); z-index:1500; align-items:center; justify-content:center; padding:20px }
+    .modal{ width:460px; max-width:96%; background:var(--card); border-radius:12px; padding:22px; text-align:center; box-shadow:0 30px 100px rgba(0,0,0,0.24) }
+    .qr{ width:260px; height:260px; object-fit:contain; margin:12px auto; background:white; padding:8px; border-radius:10px }
+    .modal .small{ color:var(--muted); margin-top:8px }
 
-    /* contact/footer */
-    footer{max-width:1100px;margin:36px auto 60px;padding:18px;text-align:center;color:#666}
-    .social a{margin:0 8px;color:var(--green-dark); text-decoration:none; font-weight:700}
+    /* Fade-in utilities for scrolling */
+    .fade-in{ opacity:0; transform: translateY(12px); transition: all .8s var(--ease) }
+    .fade-in.visible{ opacity:1; transform:none }
 
-    /* popup */
-    .popup-bg{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:90; align-items:center; justify-content:center}
-    .popup{width:360px; max-width:92%; background:var(--card); border-radius:12px; padding:16px;text-align:center; box-shadow:0 18px 50px rgba(0,0,0,.18); animation:zoomIn .28s}
-    .qr-img{width:260px; max-width:86%; border-radius:10px; margin:10px auto; display:block}
-    .small-muted{font-size:13px;color:#666;margin-top:8px}
-
-    /* form inputs */
-    .input{width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ddd}
-
-    /* animations */
-    @keyframes zoomIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-    @keyframes fadeUp{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
-
-    @media (max-width:880px){
-      .grid{grid-template-columns:1fr}
-      .hero{flex-direction:column}
-      .hero-right{width:100%}
-      .helps{grid-template-columns:1fr}
+    /* Responsiveness */
+    @media (max-width:980px){
+      .hero{ flex-direction:column }
+      .hero-right{ width:100% }
+      .grid{ grid-template-columns: repeat(1, 1fr) }
+      h2.title{ font-size:36px }
+      #introV{ font-size:120px }
+      #introText{ font-size:40px }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>VanaMala</h1>
-  <p>Bringing tribal art to every heart — and teaching safety where it matters most.</p>
-</header>
+  <!-- =====================
+       SPLASH / INTRO
+       (V big left, ANAMALA slides in from right side)
+       ===================== -->
+  <div id="introOverlay" role="region" aria-label="Intro animation">
+    <div id="introV" aria-hidden="true">V</div>
+    <div id="introText" aria-hidden="true">ANAMALA</div>
 
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="kicker">COMMUNITY · SAFETY · CULTURE</div>
-      <h2>We buy crafts fairly, we teach safety, we save lives.</h2>
-      <p>VanaMala links tribal artisans to buyers and uses the proceeds to run safety workshops and provide emergency aid in remote communities.</p>
+    <!-- faint small text for cinematic effect -->
+    <div id="introCombine">WELCOME — VANAMALA</div>
+  </div>
 
-      <div class="cta-row">
-        <button class="btn btn-primary" id="donateBtn">Donate Now</button>
-        <button class="btn btn-secondary" id="bookBtn">Book Our Session</button>
-        <a class="btn btn-secondary" href="mailto:vanamalaofficial2@gmail.com" style="text-decoration:none">Contact Us</a>
-      </div>
-    </div>
-
-    <aside class="hero-right">
-      <div class="quick">
-        <h4>Quick Impact</h4>
-        <p>Every craft bought funds one safety visit to a remote school in need.</p>
-      </div>
-      <div style="margin-top:12px">
-        <div class="counter" style="margin-top:10px">
-          <h4 id="c1">0</h4>
-          <p>Artisans Contacted</p>
-        </div>
-      </div>
-    </aside>
-  </section>
-
-  <!-- Mission and problems -->
-  <section class="card">
-    <h3>Our Mission</h3>
-    <p><strong>Every year, thousands of lives are lost</strong> in remote communities because simple safety knowledge and quick help don't reach them. VanaMala buys crafts from tribal artists at fair prices and uses the proceeds to run practical safety workshops in remote schools: earthquake response, fire escape, and flood preparedness.</p>
-
-    <div class="grid" style="margin-top:14px">
-      <div class="card problems">
-        <h3>Challenges in Remote Areas During Disasters</h3>
-        <ul>
-          <li><strong>No proper roads:</strong> Emergency vehicles cannot reach many villages — help arrives too late.</li>
-          <li><strong>Flooded rivers & broken bridges:</strong> Communities get cut off from supplies and aid.</li>
-          <li><strong>No electricity:</strong> Families go days without light, refrigeration, or charging phones.</li>
-          <li><strong>Lack of clean water:</strong> Leads to dehydration and disease when sources are contaminated.</li>
-          <li><strong>Food & supply shortages:</strong> Markets are far and transport stops during emergencies.</li>
-          <li><strong>No network connectivity:</strong> People cannot call for help or receive alerts.</li>
-          <li><strong>No nearby hospitals:</strong> Minor injuries become life-threatening without care.</li>
-          <li><strong>Vulnerable populations:</strong> Children and the elderly are at the highest risk.</li>
-          <li><strong>Fragile housing:</strong> Traditional mud or thatch homes often collapse in strong winds or floods.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>How VanaMala Helps</h3>
-        <div class="helps">
+  <!-- =====================
+       SITE (hidden while intro visible)
+       ===================== -->
+  <div id="siteRoot">
+    <div class="container">
+      <!-- header -->
+      <header class="site" role="banner">
+        <div class="brand" aria-hidden="false">
+          <div class="logo" aria-hidden="true">VM</div>
           <div>
-            <h4 style="color:var(--green-dark); margin:6px 0 6px">Emergency Packs</h4>
-            <p style="color:#444">Rations, hygiene kits, and water purification tablets for sudden needs.</p>
-          </div>
-          <div>
-            <h4 style="color:var(--green-dark); margin:6px 0 6px">Safety Workshops</h4>
-            <p style="color:#444">Short, practical training for children and families — earthquake drills, fire safety, and basic first response.</p>
-          </div>
-          <div>
-            <h4 style="color:var(--green-dark); margin:6px 0 6px">Solar & Lights</h4>
-            <p style="color:#444">Solar lanterns and basic lighting for areas without electricity.</p>
-          </div>
-          <div>
-            <h4 style="color:var(--green-dark); margin:6px 0 6px">Rebuilding Support</h4>
-            <p style="color:#444">Small rebuilding grants and materials to repair huts damaged in storms.</p>
+            <h1>VanaMala</h1>
+            <div style="font-size:13px;color:var(--muted)">Bringing tribal art to every heart</div>
           </div>
         </div>
 
-        <h4 style="margin-top:12px">Why Your Support Matters</h4>
-        <p style="color:#444">Even a small donation can pay for a teaching pack or an emergency kit. Your support helps us reach places others can't — turning a small act into life-saving change.</p>
-      </div>
+        <nav class="actions" role="navigation" aria-label="Top actions">
+          <button class="btn btn-ghost" id="btnMissionTop">See Our Mission</button>
+          <button class="btn btn-primary" id="btnDonateTop">Donate</button>
+        </nav>
+      </header>
+
+      <!-- hero -->
+      <section class="hero" role="region" aria-label="Intro hero">
+        <div class="hero-left">
+          <div class="kicker">AUTHENTIC · HANDMADE · IMPACT</div>
+          <h2 class="title">Empowering tribal communities with fair trade & safety</h2>
+          <p class="lead">We buy clay toys and crafts directly from tribal artisans at fair prices, and use the proceeds to run life-saving safety workshops and sustainable programs in remote schools.</p>
+
+          <div class="cta-row">
+            <button class="btn btn-primary" id="btnExplore">Explore Our Mission</button>
+            <button class="btn btn-ghost" id="btnDonateInline">Donate</button>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-label="Quick facts">
+          <div class="infoCard fade-in">
+            <h4>Quick facts</h4>
+            <p>Every product funds an awareness visit — helping children stay safe during emergencies.</p>
+          </div>
+
+          <div class="infoCard fade-in" style="animation-delay:.06s">
+            <h4>UPI</h4>
+            <p style="font-weight:700; color:var(--brown-1); margin-top:8px">akscosouth@okhdfcbank</p>
+            <p class="small muted" style="margin-top:8px">Click Donate to open secure QR & copy UPI option.</p>
+          </div>
+        </aside>
+      </section>
+
+      <!-- breakdown -->
+      <section class="breakdown" aria-labelledby="whereTitle">
+        <h3 id="whereTitle" style="color:var(--brown-1); margin:0 0 8px">Where donations go — transparent example</h3>
+        <p class="muted" style="margin:0 0 12px">Example split of ₹100 donated (illustrative):</p>
+
+        <div class="grid">
+          <div class="tile fade-in">
+            <h4>Field visits</h4>
+            <p class="muted">~40% — travel, safety materials, trainers for workshops in remote schools.</p>
+          </div>
+
+          <div class="tile fade-in" style="animation-delay:.06s">
+            <h4>Artisan uplift</h4>
+            <p class="muted">~35% — fair procurement price & direct small grants to artisans and families.</p>
+          </div>
+
+          <div class="tile fade-in" style="animation-delay:.12s">
+            <h4>Operations & growth</h4>
+            <p class="muted">~25% — logistics, coordination, and building sustainable systems.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © 2025 VanaMala — Supporting Tribal Communities
+      </footer>
     </div>
-  </section>
-
-  <!-- Impact & Gallery -->
-  <section class="grid" style="margin-top:18px">
-    <div class="card">
-      <h3>Impact Stats</h3>
-      <div class="counters">
-        <div class="counter"><h4 id="stat1">0</h4><p>Families Helped</p></div>
-        <div class="counter"><h4 id="stat2">0</h4><p>Schools Visited</p></div>
-        <div class="counter"><h4 id="stat3">0</h4><p>Essentials Distributed</p></div>
-      </div>
-      <p style="color:#666; margin-top:12px">(Numbers update after each trip — transparency is our promise.)</p>
-    </div>
-
-    <div class="card">
-      <h3>Gallery (Preview)</h3>
-      <div class="gallery">
-        <div class="thumb">Stall photo</div>
-        <div class="thumb">Workshop photo</div>
-        <div class="thumb">Crafts close-up</div>
-        <div class="thumb">Travel snapshot</div>
-      </div>
-      <p style="color:#666; margin-top:10px">Add real photos later — these are placeholders.</p>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="card" style="margin-top:18px">
-    <h3>Contact & Connect</h3>
-    <p style="color:#444">Email: <a href="mailto:vanamalaofficial2@gmail.com">vanamalaofficial2@gmail.com</a> &nbsp; • &nbsp; Instagram: <a href="https://instagram.com/vanamala.official" target="_blank">@VanaMala</a></p>
-    <p style="color:#666; margin-top:8px">We respond within 48 hours. For urgent help, contact local emergency services first.</p>
-  </section>
-</main>
-
-<footer>
-  <div>© 2025 VanaMala — Supporting Tribal Communities</div>
-  <div style="margin-top:6px" class="social">
-    <a href="mailto:vanamalaofficial2@gmail.com">Email</a> •
-    <a href="https://instagram.com/vanamala.official" target="_blank">Instagram</a>
   </div>
-</footer>
 
-<!-- Donate popup (small, centered) -->
-<div id="donationPopup" class="popup-bg" role="dialog" aria-hidden="true">
-  <div class="popup" role="document" aria-labelledby="donateTitle">
-    <h4 id="donateTitle">Support Our Mission</h4>
-    <p style="margin:6px 0"><strong>UPI ID:</strong> akscosouth@okhdfcbank</p>
+  <!-- =====================
+       DONATE MODAL
+       ===================== -->
+  <div class="modal-backdrop" id="donateModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document" aria-labelledby="donateTitle">
+      <h3 id="donateTitle">Support VanaMala</h3>
 
-    <!-- QR image -->
-    <img class="qr-img" src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="UPI QR">
+      <!-- Use the QR image link you provided; it will load if available -->
+      <img class="qr" id="qrImage" src="https://vanamalaofficial2-ux.github.io/tribalsupport/donation.png" alt="UPI QR code (akscosouth@okhdfcbank)">
 
-    <p class="small-muted">Scan with any UPI app to donate securely.</p>
-    <div style="margin-top:12px">
-      <button class="btn btn-primary" onclick="closeDonation()">Close</button>
+      <div class="small" style="margin-top:8px">UPI ID: <strong>akscosouth@okhdfcbank</strong></div>
+
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+        <button class="btn btn-primary" id="copyUpi">Copy UPI</button>
+        <button class="btn btn-ghost" id="closeDonate">Close</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Booking popup -->
-<div id="sessionPopup" class="popup-bg" role="dialog" aria-hidden="true">
-  <div class="popup" role="document" aria-labelledby="bookTitle">
-    <h4 id="bookTitle">Book a Safety Session</h4>
+  <!-- =====================
+       SCRIPTS: animation flow, interactions & accessibility
+       ===================== -->
+  <script>
+    (function(){
+      // Elements
+      const intro = document.getElementById('introOverlay');
+      const site = document.getElementById('siteRoot');
+      const introV = document.getElementById('introV');
+      const introText = document.getElementById('introText');
+      const combine = document.getElementById('introCombine');
 
-    <form id="bookingForm" style="margin-top:10px;">
-      <input class="input" id="user_name" name="user_name" placeholder="Full name" required>
-      <input class="input" id="user_dob" name="user_dob" type="date" required>
-      <input class="input" id="user_phone" name="user_phone" placeholder="Phone number" required>
+      // Buttons & modal
+      const btnMissionTop = document.getElementById('btnMissionTop');
+      const btnExplore = document.getElementById('btnExplore');
+      const btnDonateTop = document.getElementById('btnDonateTop');
+      const btnDonateInline = document.getElementById('btnDonateInline');
+      const donateModal = document.getElementById('donateModal');
+      const closeDonate = document.getElementById('closeDonate');
+      const copyUpiBtn = document.getElementById('copyUpi');
+      const qrImg = document.getElementById('qrImage');
 
-      <label style="display:flex;align-items:center;gap:8px;margin-top:10px;">
-        <input type="checkbox" id="human_check" required> I'm not a robot
-      </label>
+      // mission URL (open in new tab)
+      const missionURL = 'https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html';
 
-      <div style="display:flex;gap:10px;margin-top:12px">
-        <button class="btn btn-primary" type="button" onclick="submitBooking()" style="flex:1">Submit</button>
-        <button class="btn btn-secondary" type="button" onclick="closeSession()" style="flex:1">Cancel</button>
-      </div>
+      // Show combine (subtle) after text slides in
+      setTimeout(()=> {
+        if(combine) combine.style.opacity = '1';
+      }, 1850);
 
-      <p id="bookingStatus" style="margin-top:10px; display:none;"></p>
-    </form>
-  </div>
-</div>
+      // After full intro timeline, fade overlay and reveal page
+      // total visually ~2.8s: keep consistent with animations
+      setTimeout(()=> {
+        intro.classList.add('fadeOut');
 
-<script>
-  // popup controls
-  const donationPopup = document.getElementById('donationPopup');
-  const sessionPopup = document.getElementById('sessionPopup');
-  document.getElementById('donateBtn').addEventListener('click', () => donationPopup.style.display = 'flex');
-  document.getElementById('bookBtn').addEventListener('click', () => sessionPopup.style.display = 'flex');
-  function closeDonation(){ donationPopup.style.display = 'none'; }
-  function closeSession(){ sessionPopup.style.display = 'none'; }
-  window.addEventListener('click', (e) => {
-    if(e.target === donationPopup) closeDonation();
-    if(e.target === sessionPopup) closeSession();
-  });
+        // show site with smooth transition
+        setTimeout(()=> {
+          site.classList.add('visible');
+          // ensure visibility property changed
+          site.style.visibility = 'visible';
+          // add fade-in visible classes to fade-in elements progressively
+          setTimeout(()=> {
+            document.querySelectorAll('.fade-in').forEach((el, i) => {
+              setTimeout(()=> el.classList.add('visible'), 120 * i);
+            });
+          }, 120);
+        }, 420); // small delay to allow overlay fade to start
+      }, 2800);
 
-  // Animated counters (impact and quick stat)
-  function animateValue(id, start, end, duration) {
-    const obj = document.getElementById(id);
-    if(!obj) return;
-    let startTimestamp = null;
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      obj.innerText = Math.floor(progress * (end - start) + start);
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
+      // Allow Escape to dismiss intro overlay early (dev convenience)
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
+          if(intro) { intro.classList.add('fadeOut'); }
+          if(site){ site.classList.add('visible'); site.style.visibility='visible'; }
+        }
+      });
+
+      // BUTTON BEHAVIORS (smooth transitions)
+      function openMission(){
+        // animate slight click feedback then open URL
+        const el = btnMissionTop || btnExplore;
+        if(el){ el.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}], {duration:420, easing:'ease'}); }
+        // open mission in new tab
+        window.open(missionURL, '_blank', 'noopener');
       }
-    };
-    window.requestAnimationFrame(step);
-  }
+      btnMissionTop?.addEventListener('click', openMission);
+      btnExplore?.addEventListener('click', openMission);
 
-  // Trigger counters when in view
-  let countersStarted = false;
-  function startCountersIfVisible(){
-    if(countersStarted) return;
-    const rect = document.querySelector('.counters')?.getBoundingClientRect();
-    if(!rect) return;
-    if(rect.top < window.innerHeight - 100){
-      countersStarted = true;
-      animateValue('stat1', 0, 240, 1500); // families
-      animateValue('stat2', 0, 18, 1500); // schools
-      animateValue('stat3', 0, 1020, 1500); // essentials
-      animateValue('c1', 0, 200, 1500); // hero small stat
-    }
-  }
-  window.addEventListener('scroll', startCountersIfVisible);
-  window.addEventListener('load', startCountersIfVisible);
+      // Donate modal open / close
+      function showModal(){
+        donateModal.style.display = 'flex';
+        donateModal.setAttribute('aria-hidden','false');
+        // focus copy button for accessibility
+        setTimeout(()=> copyUpiBtn.focus(), 80);
+      }
+      function hideModal(){
+        donateModal.style.display = 'none';
+        donateModal.setAttribute('aria-hidden','true');
+      }
+      btnDonateTop?.addEventListener('click', showModal);
+      btnDonateInline?.addEventListener('click', showModal);
+      closeDonate?.addEventListener('click', hideModal);
+      donateModal?.addEventListener('click', (e) => { if(e.target === donateModal) hideModal(); });
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape') hideModal(); });
 
-  // Booking form: try EmailJS send with service + template (if available). Fallback to mailto + clipboard.
-  const SERVICE_ID = 'service_jps2f76';
-  const TEMPLATE_ID = 'TEMPLATE_ID_HERE'; // replace if you create one
-  const TO_EMAIL = 'vanamalaofficial2@gmail.com';
+      // Copy UPI to clipboard with feedback
+      const upiId = 'akscosouth@okhdfcbank';
+      copyUpiBtn?.addEventListener('click', async () => {
+        try{
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            await navigator.clipboard.writeText(upiId);
+          } else {
+            const tmp = document.createElement('input');
+            tmp.value = upiId; document.body.appendChild(tmp);
+            tmp.select(); document.execCommand('copy'); tmp.remove();
+          }
+          const original = copyUpiBtn.textContent;
+          copyUpiBtn.textContent = 'Copied ✓';
+          copyUpiBtn.disabled = true;
+          setTimeout(()=> { copyUpiBtn.textContent = original; copyUpiBtn.disabled = false; }, 1400);
+        } catch(err){
+          alert('Copy failed — long-press UPI on mobile to copy.');
+          console.warn(err);
+        }
+      });
 
-  function submitBooking(){
-    const name = document.getElementById('user_name').value.trim();
-    const dob = document.getElementById('user_dob').value;
-    const phone = document.getElementById('user_phone').value.trim();
-    const checked = document.getElementById('human_check').checked;
-    const statusEl = document.getElementById('bookingStatus');
+      // Ensure QR image fallback if external hosted QR fails to load
+      qrImg.onerror = function(){
+        // fallback to programmatic QR generation using qrserver with UPI deep-link data
+        const upiLink = encodeURIComponent('upi://pay?pa=' + upiId + '&pn=VanaMala&cu=INR');
+        qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=' + upiLink;
+      };
 
-    if(!name || !dob || !phone || !checked){
-      alert('Please fill all fields and confirm you are not a robot.');
-      return;
-    }
+      // Minor: add pointer cursor for clickable info cards
+      document.querySelectorAll('.infoCard').forEach(el => { el.style.cursor = 'pointer'; el.addEventListener('click', ()=> showModal()); });
 
-    const templateParams = { user_name: name, user_dob: dob, user_phone: phone, to_email: TO_EMAIL };
+      // small onload polish: if user reloads and intro overlay stuck hidden (rare), ensure site visible
+      window.addEventListener('load', ()=> {
+        setTimeout(()=> {
+          if(getComputedStyle(intro).visibility === 'hidden' && getComputedStyle(site).visibility !== 'visible'){
+            site.style.visibility = 'visible';
+            site.classList.add('visible');
+          }
+        }, 1000);
+      });
 
-    // If template ID present, try direct EmailJS send
-    if(TEMPLATE_ID && TEMPLATE_ID !== 'TEMPLATE_ID_HERE'){
-      emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
-        .then(() => {
-          statusEl.style.display='block'; statusEl.style.color='green';
-          statusEl.textContent = 'Session booked! We will contact you soon.';
-          copyBooking(templateParams);
-          setTimeout(()=>{ closeSession(); statusEl.style.display='none'; document.getElementById('bookingForm').reset(); }, 1600);
-        })
-        .catch((err) => {
-          console.error('EmailJS error:', err);
-          fallbackBooking(templateParams);
-        });
-    } else {
-      fallbackBooking(templateParams);
-    }
-  }
-
-  function fallbackBooking(params){
-    const statusEl = document.getElementById('bookingStatus');
-    copyBooking(params);
-    // open mail client
-    const subject = encodeURIComponent('VanaMala Session Booking');
-    const body = encodeURIComponent(`New booking:\nName: ${params.user_name}\nDOB: ${params.user_dob}\nPhone: ${params.user_phone}\n\n(Details copied to clipboard)`);
-    statusEl.style.display='block'; statusEl.style.color='orange';
-    statusEl.textContent = 'Auto-send not configured — details copied to clipboard. Opening mail app...';
-    setTimeout(()=>{ window.location.href = `mailto:${TO_EMAIL}?subject=${subject}&body=${body}`; }, 500);
-  }
-
-  function copyBooking(params){
-    const text = `VanaMala Session Booking\nName: ${params.user_name}\nDOB: ${params.user_dob}\nPhone: ${params.user_phone}\nSend to: ${TO_EMAIL}`;
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).catch(()=>{});
-    }
-  }
-</script>
+    })();
+  </script>
 </body>
 </html>
-
