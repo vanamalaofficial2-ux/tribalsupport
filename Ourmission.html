@@ -51,36 +51,9 @@
       font-weight:600;
       font-size:15px;
     }
-    nav a:hover{
-      color:var(--brown-2);
-    }
+    nav a:hover{ color:var(--brown-2); }
 
-    header{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:24px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .logo{
-      width:54px;height:54px;
-      background:linear-gradient(180deg,var(--brown-1),var(--brown-2));
-      border-radius:14px;
-      display:flex;justify-content:center;align-items:center;
-      color:white;font-weight:800;font-family:Poppins;
-      box-shadow:0 8px 28px rgba(0,0,0,0.1);
-    }
-
-    h1{font-family:Poppins;margin:0;font-size:26px;color:var(--brown-1);}
-
+    /* Hero */
     .hero{
       max-width:var(--maxw);
       margin:20px auto;
@@ -90,14 +63,12 @@
       box-shadow:var(--shadow);
       text-align:center;
     }
-
     .hero h2{
       font-family:Poppins;
       font-size:42px;
       margin-bottom:10px;
       color:var(--brown-1);
     }
-
     .hero p{
       color:var(--muted);
       font-size:18px;
@@ -106,6 +77,7 @@
       line-height:1.6;
     }
 
+    /* Sections */
     .section{
       max-width:var(--maxw);
       margin:40px auto;
@@ -114,7 +86,6 @@
       border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
-
     .section h3{
       font-family:Poppins;
       font-size:30px;
@@ -122,72 +93,7 @@
       margin-bottom:16px;
     }
 
-    /* Mission Grid */
-    .mission-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    }
-
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:var(--radius);
-      box-shadow:0 10px 24px rgba(0,0,0,0.06);
-    }
-
-    .card h4{
-      margin:0 0 8px;
-      font-family:Poppins;
-      color:var(--brown-1);
-    }
-
-    .card p{color:var(--muted);margin:0;line-height:1.5;}
-
-    /* TEAM SECTION : GLASS CARDS */
-    .team-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:22px;
-      margin-top:25px;
-    }
-
-    .team-card{
-      padding:24px;
-      border-radius:18px;
-      background:rgba(255,255,255,0.55);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      box-shadow:0 12px 30px rgba(0,0,0,0.08);
-      border:1px solid rgba(255,255,255,0.4);
-      transition:0.3s;
-    }
-
-    .team-card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 18px 40px rgba(0,0,0,0.12);
-    }
-
-    .team-card h4{
-      margin:0;
-      font-family:Poppins;
-      font-size:20px;
-      color:var(--brown-1);
-    }
-
-    .team-card small{
-      color:var(--brown-2);
-      font-weight:600;
-    }
-
-    .team-card p{
-      margin-top:10px;
-      color:#5b4b42;
-      line-height:1.5;
-      font-size:15px;
-    }
-
-    /* Fade-In Animation */
+    /* Fade */
     .fade{
       opacity:0;
       transform:translateY(40px);
@@ -198,127 +104,228 @@
       transform:translateY(0);
     }
 
-    footer{
-      text-align:center;
-      padding:30px;
-      color:var(--muted);
-      font-size:14px;
+    /* Cards */
+    .mission-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
     }
+    .card{
+      background:white;
+      padding:20px;
+      border-radius:var(--radius);
+      box-shadow:0 10px 24px rgba(0,0,0,0.06);
+    }
+
+    /* Team */
+    .team-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:22px;
+      margin-top:25px;
+    }
+    .team-card{
+      padding:24px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.55);
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 30px rgba(0,0,0,0.08);
+      border:1px solid rgba(255,255,255,0.4);
+      transition:0.3s;
+    }
+    .team-card:hover{ transform:translateY(-6px); }
+
+    /* POPUPS */
+    .popup-bg{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.5);
+      display:none;justify-content:center;align-items:center;
+      z-index:200;
+    }
+    .popup{
+      background:white;
+      padding:30px;
+      border-radius:20px;
+      max-width:450px;
+      width:90%;
+      text-align:center;
+      box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    }
+    .btn{
+      padding:12px 20px;
+      border-radius:12px;
+      font-size:16px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      margin-top:15px;
+      background:var(--brown-1);
+      color:white;
+    }
+    .btn:hover{background:var(--brown-2);}
+
+    .choice-btn{
+      padding:12px 16px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      margin:8px;
+    }
+    .yes{background:#4CAF50;color:white;}
+    .no{background:#d9534f;color:white;}
+
   </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav>
   <div class="inner">
-    <div class="brand">
-      <div class="logo">VM</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="background:linear-gradient(180deg,#5a2e0a,#c68b3b);padding:12px 18px;border-radius:10px;color:white;font-weight:700;">VM</div>
       <h1 style="font-size:22px;">VanaMala</h1>
     </div>
 
     <div class="links">
       <a href="index.html">Home</a>
-      <a href="our mission.html">Our Mission</a>
+      <a href="our-mission.html">Our Mission</a>
       <a href="shop.html">Shop</a>
       <a href="contact.html">Contact</a>
+      <a href="https://vanamalaofficial2-ux.github.io/tribalsupport/wallofsupport.html">Wall of Support</a>
     </div>
   </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero fade">
   <h2>Our Mission</h2>
-  <p>To uplift tribal communities by providing them fair trade for their handmade art, while funding essential awareness programs, safety workshops, and sustainable development in remote schools.</p>
+  <p>We uplift tribal communities by promoting their art & supporting child and safety-focused programs in remote villages.</p>
 </section>
 
+<!-- EXPLANATION -->
 <section class="section fade">
-  <h3>What We Do</h3>
+  <h3>Before You Donate</h3>
+  <p style="line-height:1.7;font-size:17px;">
+    We take donations of any amounts because every contribution directly supports tribal artisans, safety workshops,
+    and rural child programs.  
+    <br><br>
+    You will also receive a **special recognition badge** and **few amazing features too** .
+  </p>
+</section>
+
+<!-- BADGES + DONATE BUTTON -->
+<section class="section fade">
+  <h3>Your Recognition Badges</h3>
+
   <div class="mission-grid">
     <div class="card">
-      <h4>Fair Trade with Artisans</h4>
-      <p>We buy clay toys and traditional crafts directly from tribal artisans at fair, respectful prices so their work is valued with dignity.</p>
+      <h4>₹50 – ₹150<br>✨ Kind Heart Badge</h4>
+      <p>Digital badge + Your name on Wall of Support (optional).</p>
     </div>
 
     <div class="card">
-      <h4>Safety & Awareness Programs</h4>
-      <p>Donations help us organise awareness visits, safety training, and emergency education sessions for children in remote areas.</p>
+      <h4>₹151 – ₹499<br>✨ Golden Hand Badge</h4>
+      <p>Personalized email letter + Golden Digital Badge + Your name on Wall of Support (optional).</p>
     </div>
 
     <div class="card">
-      <h4>Direct Community Support</h4>
-      <p>Funds are allocated for school supplies, small grants, and initiatives that directly benefit tribal families and their livelihood.</p>
+      <h4>₹500 and Above<br>✨ True Pillar Badge</h4>
+      <p>Handwritten thank-you letter sent to you + Platinum Digital Badge + Your name on Wall Of Support (Optional)+ Discounts from 10% to 15%.</p>
     </div>
   </div>
+  <button class="btn" onclick="openPopup()">Donate</button>
 </section>
 
-<section class="section fade">
-  <h3>Why It Matters</h3>
-  <p>Tribal communities hold rich art, culture, and knowledge. Yet many face economic instability and lack access to safety education. VanaMala bridges this gap by ensuring artisans earn fairly while children receive life-changing support.</p>
-</section>
+<!-- POPUP 1 -->
+<div class="popup-bg" id="popup1">
+  <div class="popup">
+    <h3>Did You Donate?</h3>
+    <p>Select an option:</p>
+    <button class="choice-btn yes" onclick="nextPopup()">Yes, I Donated</button>
+    <button class="choice-btn no" onclick="closePopup()">No, Not Yet</button>
+  </div>
+</div>
 
-<!-- TEAM SECTION -->
+<!-- POPUP 2 -->
+<div class="popup-bg" id="popup2">
+  <div class="popup">
+    <h3>Important Step ❤️</h3>
+    <p style="line-height:1.6;font-size:15px;color:#444;">
+      Please send the following on WhatsApp to  
+      <b>9246780138</b>:  
+      <br><br>
+      • Your Name  
+      • Email ID  
+      • A Short Message (optional)  
+      • Transaction ID  
+      <br><br>
+      This allows us to verify your donation and award your badge.
+    </p>
+
+    <button class="btn" onclick="closeAll()">OK</button>
+  </div>
+</div>
+
+<!-- TEAM -->
 <section class="section fade">
   <h3>Meet Our Founders</h3>
-
   <div class="team-grid">
     <div class="team-card">
-      <h4>Medha</h4>
-      <small>Founder</small>
-      <p>"I wanted VanaMala to become a bridge — between forgotten art and people who truly value it. Every artisan deserves respect for the culture they preserve."</p>
+      <h4>Medha</h4><small>Founder</small>
+      <p>"I wanted VanaMala to become a bridge between forgotten art and people who truly value it."</p>
     </div>
-
     <div class="team-card">
-      <h4>Vardhan</h4>
-      <small>Founder</small>
-      <p>"Growing up, I always felt that real change begins with small, honest steps. Supporting tribal communities is not charity — it's responsibility."</p>
+      <h4>Vardhan</h4><small>Founder</small>
+      <p>"Real change begins with honest small steps."</p>
     </div>
   </div>
 
   <h3 style="margin-top:40px;">Meet Our Co-Founders</h3>
-
   <div class="team-grid">
     <div class="team-card">
-      <h4>Tinesh</h4>
-      <small>Co-Founder</small>
-      <p>"For me, VanaMala is not a project — it's a promise. A promise that every child in remote villages should feel seen, safe, and supported."</p>
+      <h4>Tinesh</h4><small>Co-Founder</small>
+      <p>"Every child should feel seen, safe and supported."</p>
     </div>
-
     <div class="team-card">
-      <h4>Dimple</h4>
-      <small>Co-Founder</small>
-      <p>"I believe kindness scales. Every person who joins us creates a ripple — and these ripples together become impact."</p>
+      <h4>Dimple</h4><small>Co-Founder</small>
+      <p>"Kindness scales. Every supporter becomes a ripple."</p>
     </div>
-
     <div class="team-card">
-      <h4>Shravya</h4>
-      <small>Co-Founder</small>
-      <p>"Art carries stories, and tribal art carries generations. I want VanaMala to protect these stories and the people behind them."</p>
+      <h4>Shravya</h4><small>Co-Founder</small>
+      <p>"Art carries generations. We protect the hands behind it."</p>
     </div>
-
     <div class="team-card">
-      <h4>Naga Shaurya</h4>
-      <small>Co-Founder</small>
-      <p>"Every artisan we support feels like a win for all of us. Their happiness, dignity, and growth — that’s what drives me."</p>
+      <h4>Naga Shaurya</h4><small>Co-Founder</small>
+      <p>"Every artisan uplifted is a victory for us."</p>
     </div>
   </div>
 </section>
 
-<footer>
-  © 2025 VanaMala — Empowering Tribal Communities
+<footer style="text-align:center;padding:30px;color:var(--muted);font-size:14px;">
+ © 2025 VanaMala — Empowering Tribal Communities
 </footer>
 
 <script>
-  const faders = document.querySelectorAll('.fade');
-
-  const appear = new IntersectionObserver((entries)=>{
+  const faders=document.querySelectorAll('.fade');
+  const appear=new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-      }
+      if(entry.isIntersecting){ entry.target.classList.add('show'); }
     })
   },{threshold:0.3});
-
   faders.forEach(f=>appear.observe(f));
+
+  function openPopup(){ document.getElementById('popup1').style.display="flex"; }
+  function closePopup(){ document.getElementById('popup1').style.display="none"; }
+  function nextPopup(){
+    document.getElementById('popup1').style.display="none";
+    document.getElementById('popup2').style.display="flex";
+  }
+  function closeAll(){
+    document.getElementById('popup2').style.display="none";
+    alert("Thank you for supporting VanaMala ❤️");
+  }
 </script>
 
 </body>
