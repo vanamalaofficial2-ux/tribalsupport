@@ -1,246 +1,341 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall of Support — VanaMala</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VanaMala — Wall of Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brown-1:#5a2e0a;
+      --brown-2:#c68b3b;
+      --bg:#3b1f0f;
+      --muted:#6b5850;
+      --card:#f7efe6;
+      --radius:14px;
+      --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:linear-gradient(180deg,#fbf4ec,#f2e4d6);
+      color:#2f241c;
+      -webkit-font-smoothing:antialiased;
+    }
 
-    <style>
-        body {
-            background: #3a1f0f;
-            font-family: "Poppins", sans-serif;
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
+    /* header / nav */
+    header{max-width:var(--maxw); margin:0 auto; padding:20px; display:flex; align-items:center; justify-content:space-between}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:54px;height:54px;border-radius:12px;background:linear-gradient(180deg,var(--brown-1),var(--brown-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:Poppins}
+    nav a{margin-left:18px;text-decoration:none;color:var(--brown-1);font-weight:600;font-family:Poppins;cursor:pointer}
+    nav a:hover{opacity:.8}
 
-        h1 {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 40px;
-            font-weight: 700;
-        }
+    /* hero area */
+    .support-hero{background:var(--bg); color:#fff; padding:70px 20px; text-align:center}
+    .support-hero h1{font-family:Poppins;font-size:44px;margin:0 0 8px}
+    .support-hero p{max-width:900px;margin:0 auto;color:rgba(255,255,255,0.9);font-size:18px;line-height:1.6}
 
-        .subtitle {
-            text-align: center;
-            max-width: 700px;
-            margin: auto;
-            font-size: 17px;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
+    /* grid */
+    .wrap{max-width:var(--maxw); margin:36px auto; padding:0 20px}
+    .support-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:26px; margin-top:26px}
 
-        .support-container {
-            width: 90%;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius:16px; padding:28px; box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+      color: #fff; min-height:200px; display:flex; flex-direction:column; justify-content:space-between;
+      transition:transform .28s ease, box-shadow .28s ease;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card:hover{ transform:translateY(-8px); box-shadow:0 28px 60px rgba(0,0,0,0.2) }
 
-        .support-card {
-            background: #e8d4bd;
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            color: #3a1f0f;
-        }
+    .donor-name{ font-family:Poppins; font-size:22px; font-weight:800; color:#fff; margin-bottom:10px }
+    .badge{ display:inline-block; padding:8px 14px; border-radius:999px; font-weight:700; margin-bottom:14px; font-size:14px; color:#111 }
+    .badge.kind{ background:#c0c0c0 }         /* Kind Heart */
+    .badge.golden{ background:#ffd700 }       /* Golden Hand */
+    .badge.pillar{ background:linear-gradient(90deg,#fff176,#ffd54f); box-shadow:0 6px 20px rgba(255,215,0,0.2) } /* True Pillar - shiny look */
 
-        .name {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+    /* make True Pillar REALLY shine */
+    .card.pillar {
+      background: linear-gradient(180deg, rgba(255,255,240,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,215,0,0.18);
+    }
+    .card.pillar::after{
+      content:"";
+      position:absolute; pointer-events:none;
+    }
 
-        .badge-kind-heart {
-            background: #C0C0C0;
-            color: #333;
-            padding: 7px 16px;
-            border-radius: 18px;
-            font-weight: 600;
-            display: inline-block;
-            box-shadow: inset 0 0 3px #888;
-        }
+    .donor-message{ color: rgba(255,255,255,0.9); font-size:15px; line-height:1.5; margin-top:12px }
 
-        .badge-golden-hand {
-            background: #FFD700;
-            color: #000;
-            padding: 7px 16px;
-            border-radius: 18px;
-            font-weight: 600;
-            display: inline-block;
-            box-shadow: inset 0 0 3px #b38b00;
-        }
+    /* CTA under grid */
+    .support-cta{ text-align:center; margin-top:28px }
+    .support-cta button{ background:linear-gradient(90deg,var(--brown-1),var(--brown-2)); color:#fff; padding:12px 20px; border-radius:30px; border:0; font-weight:700; cursor:pointer; box-shadow:0 12px 30px rgba(0,0,0,0.24) }
 
-        .badge-true-pillar {
-            background: #ffcc00;
-            color: #000;
-            padding: 7px 16px;
-            border-radius: 18px;
-            font-weight: 700;
-            display: inline-block;
-            box-shadow: inset 0 0 3px #8a6a00;
-        }
+    /* small helper */
+    .muted{ color:rgba(255,255,255,0.8); font-size:15px }
 
-        .message {
-            margin-top: 12px;
-            font-size: 15px;
-            opacity: 0.8;
-        }
+    /* popup */
+    .popup-back{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; align-items:center; justify-content:center }
+    .popup{ background:#fff; padding:22px; border-radius:14px; width:90%; max-width:520px; box-shadow:0 24px 80px rgba(0,0,0,0.4); text-align:center }
+    .popup h3{ margin:0 0 8px; color:var(--brown-1); font-family:Poppins }
+    .popup p{ color:#333; line-height:1.5 }
+    .popup .actions{ margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
+    .btn{ background:var(--brown-1); color:#fff; padding:10px 18px; border-radius:10px; border:0; cursor:pointer; font-weight:700 }
+    .btn.ghost{ background:transparent; color:var(--brown-1); border:2px solid rgba(90,46,10,0.12) }
 
-        /* Donate Button */
-        .donate-section {
-            margin-top: 40px;
-            text-align: center;
-        }
+    /* form inside popup */
+    .form-row{ display:flex; gap:10px; margin-top:10px; flex-direction:column; text-align:left }
+    .form-row label{ font-size:13px; color:#333; font-weight:600 }
+    .form-row input, .form-row textarea{ padding:10px; border-radius:8px; border:1px solid #ddd; font-size:14px; width:100% }
+    .small-note{ font-size:13px; color:#444; margin-top:10px }
 
-        .donate-btn {
-            background: #8a3b00;
-            padding: 14px 28px;
-            color: white;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* Popup */
-        .popup-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .popup-box {
-            background: white;
-            color: black;
-            padding: 30px;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .popup-btn {
-            background: #8a3b00;
-            color: white;
-            padding: 12px 22px;
-            border-radius: 10px;
-            margin-top: 15px;
-            display: inline-block;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .close-btn {
-            margin-top: 12px;
-            cursor: pointer;
-        }
-    </style>
+    /* responsive */
+    @media (max-width:720px){
+      .support-hero h1{ font-size:30px }
+      .card{ padding:18px }
+    }
+  </style>
 </head>
-
 <body>
 
+  <!-- header -->
+  <header>
+    <div class="brand">
+      <div class="logo">VM</div>
+      <div>
+        <div style="font-family:Poppins;font-weight:800;color:var(--brown-1);font-size:20px">VanaMala</div>
+      </div>
+    </div>
+
+    <nav>
+      <a onclick="openDonatePopup()">Support</a>
+      <!-- other links removed as requested -->
+    </nav>
+  </header>
+
+  <!-- hero -->
+  <section class="support-hero">
     <h1>Wall of Support</h1>
-    <p class="subtitle">
-        These amazing people are the backbone of VanaMala. Their kindness keeps our tribal mission alive.
-    </p>
+    <p>The people below are the heartbeat of VanaMala. Their kindness keeps our tribal communities growing, learning and standing tall.</p>
+  </section>
 
-    <div class="support-container">
+  <div class="wrap">
+    <!-- grid of donors -->
+    <div class="support-grid" id="supportGrid">
 
-        <!-- ★ Kind Heart -->
-        <div class="support-card">
-            <div class="name">Pallamreddy Bhuvan Reddy</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Glad to help — keep the good work!"</p>
+      <!-- Using the donor list from your sheet. amounts decide badge.
+           I included the names you requested: Pallamreddy Bhuvan Reddy, Ruhan Kanjani,
+           Dev Dubey, Kanshika Kodicherla (replaced Gayatri), Manas Santosh Kulkarni,
+           Geddam Mokshitha Reddy, Swapna N, Aditya Singathi, Shanmuk I, Jatin Sai Vasantha
+      -->
+
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Pallamreddy Bhuvan Reddy</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Glad to help — keep the good work!"</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Ruhan Kanjani</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Small step, big impact."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Ruhan Kanjani</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Small step, big impact."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Dev Dubey</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Proud to support artisans."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Dev Dubey</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Proud to support artisans."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Kanishka Kodicherla</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Happy to contribute."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Kanshika Kodicherla</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Happy to contribute."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Manas Santosh Kulkarni</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Keep protecting culture."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Manas Santosh Kulkarni</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Keep protecting culture."</div>
         </div>
+      </div>
 
-        <!-- ★ True Pillar (₹500 +) -->
-        <div class="support-card">
-            <div class="name">Geddam Mokshitha Reddy B MFG Vijaya</div>
-            <span class="badge-true-pillar">True Pillar</span>
-            <p class="message">"Standing with VanaMala for the long run."</p>
+      <div class="card fade-in pillar">
+        <div>
+          <div class="donor-name">Geddam Mokshitha Reddy</div>
+          <div class="badge pillar">True Pillar</div>
+          <div class="donor-message">"Standing with VanaMala for the long run."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Swapna N</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Helping is a blessing."</p>
+      <div class="card fade-in pillar">
+        <div>
+          <div class="donor-name">Swapna N</div>
+          <div class="badge pillar">True Pillar</div>
+          <div class="donor-message">"Happy to help — best wishes."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Aditya Singathi</div>
-            <span class="badge-golden-hand">Golden Hand</span>
-            <p class="message">"Always supporting!"</p>
+      <div class="card fade-in pillar">
+        <div>
+          <div class="donor-name">Aditya Singathi</div>
+          <div class="badge pillar">True Pillar</div>
+          <div class="donor-message">"Delighted to support this cause."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Shanmuk I</div>
-            <span class="badge-kind-heart">Kind Heart</span>
-            <p class="message">"Every rupee counts."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Shanmuk. I</div>
+          <div class="badge kind">Kind Heart</div>
+          <div class="donor-message">"Every bit helps — proud to be here."</div>
         </div>
+      </div>
 
-        <div class="support-card">
-            <div class="name">Jatin Sai Vasantha</div>
-            <span class="badge-golden-hand">Golden Hand</span>
-            <p class="message">"With VanaMala always."</p>
+      <div class="card fade-in">
+        <div>
+          <div class="donor-name">Jatin Sai Vasantha</div>
+          <div class="badge gold">Golden Hand</div>
+          <div class="donor-message">"Keep growing — happy to help."</div>
         </div>
+      </div>
+
     </div>
 
-    <!-- Donate Section at Bottom -->
-    <div class="donate-section">
-        <div class="donate-btn" onclick="openPopup()">Do you also want to be on the Wall of Support? Donate Now</div>
+    <!-- CTA placed under the grid (where you wanted it) -->
+    <div class="support-cta">
+      <div style="margin-bottom:6px;color:rgba(0,0,0,0.6)">Do you also want to be on the Wall of Support?</div>
+      <button onclick="openDonatePopup()">Donate Now</button>
     </div>
+  </div>
 
-    <!-- Donate Popup -->
-    <div class="popup-bg" id="popup">
-        <div class="popup-box">
-            <h2>Donate to Support!</h2>
-            <p>Send your Name, Transaction ID & Screenshot to WhatsApp: <br><b>9246780138</b></p>
-
-            <a href="upi://pay?pa=YOUR_UPI_ID" class="popup-btn">Proceed to Donate</a>
-            <div class="close-btn" onclick="closePopup()">Close</div>
-        </div>
+  <!-- POPUP 1: intro to donate -->
+  <div class="popup-back" id="popupIntro" role="dialog" aria-hidden="true">
+    <div class="popup">
+      <h3>Donate to Support!</h3>
+      <p>Contribute and become part of the Wall of Support. Donations ₹500 and above are True Pillar (shiny), ₹151–₹499 Golden Hand, ₹50–₹150 Kind Heart.</p>
+      <div class="actions">
+        <button class="btn" onclick="openDonateForm()">Proceed to Donate</button>
+        <button class="btn ghost" onclick="closePopups()">Close</button>
+      </div>
     </div>
+  </div>
 
-    <script>
-        function openPopup(){
-            document.getElementById("popup").style.display = "flex";
-        }
-        function closePopup(){
-            document.getElementById("popup").style.display = "none";
-        }
-    </script>
+  <!-- POPUP 2: donate form / verification instructions -->
+  <div class="popup-back" id="popupForm" role="dialog" aria-hidden="true">
+    <div class="popup" style="text-align:left">
+      <h3 style="text-align:center">Donate & Verify</h3>
+      <p style="text-align:center;color:#444">UPI ID: <strong>akscosouth@okhdfcbank</strong></p>
 
+      <div class="form-row">
+        <label for="donorName">Your name</label>
+        <input id="donorName" placeholder="Full name">
+      </div>
+      <div class="form-row">
+        <label for="donorEmail">Email</label>
+        <input id="donorEmail" placeholder="you@example.com">
+      </div>
+      <div class="form-row">
+        <label for="txnId">Transaction ID (after payment)</label>
+        <input id="txnId" placeholder="UPI / bank txn id">
+      </div>
+      <div class="form-row">
+        <label for="donorMsg">A short message (optional)</label>
+        <textarea id="donorMsg" rows="3" placeholder="What you'd like us to show on the wall (or leave blank)"></textarea>
+      </div>
+
+      <p class="small-note">After donating, please send this exact info via WhatsApp to <strong>9246780138</strong> so we can verify and add you to the Wall of Support:</p>
+      <ul style="color:#333; margin-top:6px">
+        <li><strong>Name</strong></li>
+        <li><strong>Email</strong></li>
+        <li><strong>Transaction ID</strong></li>
+        <li>(optional) short message for the wall</li>
+      </ul>
+
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:12px;">
+        <button class="btn" onclick="copyUPI()">Copy UPI</button>
+        <button class="btn" onclick="copyWhatsApp()">Copy WhatsApp Message</button>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:12px;">
+        <button class="btn" onclick="submitDonor()">I sent the WhatsApp — Submit</button>
+        <button class="btn ghost" onclick="closePopups()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- THANK YOU POPUP -->
+  <div class="popup-back" id="popupThanks" role="dialog" aria-hidden="true">
+    <div class="popup">
+      <h3>Thanks — we got it!</h3>
+      <p>We’ll verify your message and add your name to the Wall of Support soon. If you donated ₹500+, your "True Pillar" card will get the shiny treatment.</p>
+      <div style="margin-top:12px"><button class="btn" onclick="closePopups()">Close</button></div>
+    </div>
+  </div>
+
+  <footer style="text-align:center;padding:24px;color:var(--muted);font-size:14px">© 2025 VanaMala — Empowering Tribal Communities</footer>
+
+  <script>
+    // helpers to open/close
+    const byId = id => document.getElementById(id);
+    function openDonatePopup(){ byId('popupIntro').style.display='flex'; byId('popupIntro').setAttribute('aria-hidden','false') }
+    function openDonateForm(){ byId('popupIntro').style.display='none'; byId('popupForm').style.display='flex'; byId('popupForm').setAttribute('aria-hidden','false') }
+    function closePopups(){ ['popupIntro','popupForm','popupThanks'].forEach(id=>{ byId(id).style.display='none'; if(byId(id)) byId(id).setAttribute('aria-hidden','true') }) }
+
+    function copyUPI(){
+      const upi = 'akscosouth@okhdfcbank';
+      navigator.clipboard?.writeText(upi).then(()=>alert('UPI copied to clipboard: ' + upi)).catch(()=>alert('Copy failed — long-press the UPI ID to copy.'));
+    }
+
+    function copyWhatsApp(){
+      // build message from form fields (if filled)
+      const name = encodeURIComponent(document.getElementById('donorName').value || '[NAME]');
+      const email = encodeURIComponent(document.getElementById('donorEmail').value || '[EMAIL]');
+      const txn = encodeURIComponent(document.getElementById('txnId').value || '[TRANSACTION_ID]');
+      const msg = encodeURIComponent(document.getElementById('donorMsg').value || '');
+      const phone = '9246780138';
+      const body = `Hello VanaMala,%0A%0AI have donated and would like to be added to the Wall of Support.%0AName: ${name}%0AEmail: ${email}%0ATransaction ID: ${txn}%0AMessage: ${msg}%0AThanks!`;
+      // Create a WhatsApp link for mobile/desktop. We will open a new window with prefilled text.
+      const waLink = `https://wa.me/${phone}?text=${body}`;
+      // open whatsapp in new tab
+      window.open(waLink, '_blank');
+    }
+
+    function submitDonor(){
+      // Basic validation
+      const name = document.getElementById('donorName').value.trim();
+      const email = document.getElementById('donorEmail').value.trim();
+      const txn = document.getElementById('txnId').value.trim();
+      if(!name || !email || !txn){
+        alert('Please fill Name, Email and Transaction ID before submitting (or send them via WhatsApp to 9246780138).');
+        return;
+      }
+      // For demo: we just show thank you and close after confirmation.
+      byId('popupForm').style.display='none';
+      byId('popupThanks').style.display='flex';
+    }
+
+    // small reveal animation for cards
+    document.querySelectorAll('.fade-in').forEach((el,i)=>{
+      el.style.animation = `fade 0.7s ease ${0.06*i}s forwards`;
+    });
+
+    // Add click on nav "Support" to open donate popup (already wired via onclick in nav anchor).
+    // If you want the Support link to be a normal link, change accordingly.
+
+    // Accessibility: allow Esc to close popups
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closePopups();
+    });
+  </script>
 </body>
 </html>
