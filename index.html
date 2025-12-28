@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -201,9 +202,113 @@
       #introV{ font-size:120px }
       #introText{ font-size:40px }
     }
+	
+	/* ===== GATE SCREEN ===== */
+#gate {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow: hidden;
+  background: #000;
+}
+
+#gate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(105%);
+}
+
+.gate-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.25)
+  );
+}
+
+.gate-content {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #fff;
+  max-width: 680px;
+  padding: 0 20px;
+  animation: slideUp 1.2s ease forwards;
+}
+
+.gate-content h2 {
+  font-family: Poppins, sans-serif;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.gate-content p {
+  font-size: 16px;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.gate-content button {
+  background: linear-gradient(90deg, #c68b3b, #8b4a0f);
+  border: none;
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gate-content button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* fade out animation */
+#gate.fade-out {
+  animation: fadeGate 0.8s ease forwards;
+}
+
+@keyframes fadeGate {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
   </style>
 </head>
 <body>
+<!-- ===== OPENING GATE SCREEN ===== -->
+<div id="gate">
+  <img src="https://vanamalaofficial2-ux.github.io/tribalsupport/Sensitivecontent.jpg" alt="Sensitive Content">
+
+  <div class="gate-overlay"></div>
+
+  <div class="gate-content">
+    <h2>Some stories are raw. Some truths are real.</h2>
+    <p>This platform represents real lives, real struggles, and real change.</p>
+    <button onclick="enterSite()">Go through anyway →</button>
+  </div>
+</div>
+
 
   <!-- =====================
        SPLASH / INTRO
@@ -441,6 +546,17 @@
 
     })();
   </script>
+  <script>
+function enterSite() {
+  const gate = document.getElementById("gate");
+  gate.classList.add("fade-out");
+
+  setTimeout(() => {
+    gate.remove();
+  }, 800);
+}
+</script>
+
 </body>
 </html>
 
