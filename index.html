@@ -422,6 +422,32 @@
        SCRIPTS: animation flow, interactions & accessibility
        ===================== -->
   <script>
+  function startIntro() {
+  const intro = document.getElementById('introOverlay');
+  const site = document.getElementById('siteRoot');
+  const combine = document.getElementById('introCombine');
+
+  // show combine text
+  setTimeout(() => {
+    if (combine) combine.style.opacity = '1';
+  }, 1850);
+
+  // fade intro and reveal site
+  setTimeout(() => {
+    intro.classList.add('fadeOut');
+
+    setTimeout(() => {
+      site.classList.add('visible');
+      site.style.visibility = 'visible';
+
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 120 * i);
+      });
+
+    }, 420);
+  }, 2800);
+}
+
     (function(){
       // Elements
       const intro = document.getElementById('introOverlay');
@@ -443,29 +469,6 @@
       // mission URL (open in new tab)
       const missionURL = 'https://vanamalaofficial2-ux.github.io/tribalsupport/Ourmission.html';
 
-      // Show combine (subtle) after text slides in
-      setTimeout(()=> {
-        if(combine) combine.style.opacity = '1';
-      }, 1850);
-
-      // After full intro timeline, fade overlay and reveal page
-      // total visually ~2.8s: keep consistent with animations
-      setTimeout(()=> {
-        intro.classList.add('fadeOut');
-
-        // show site with smooth transition
-        setTimeout(()=> {
-          site.classList.add('visible');
-          // ensure visibility property changed
-          site.style.visibility = 'visible';
-          // add fade-in visible classes to fade-in elements progressively
-          setTimeout(()=> {
-            document.querySelectorAll('.fade-in').forEach((el, i) => {
-              setTimeout(()=> el.classList.add('visible'), 120 * i);
-            });
-          }, 120);
-        }, 420); // small delay to allow overlay fade to start
-      }, 2800);
 
       // Allow Escape to dismiss intro overlay early (dev convenience)
       document.addEventListener('keydown', (e) => {
@@ -553,8 +556,13 @@ function enterSite() {
 
   setTimeout(() => {
     gate.remove();
+
+    // 🔥 START V + ANAMALA INTRO AFTER GATE
+    startIntro();
+
   }, 800);
 }
+
 </script>
 
 </body>
