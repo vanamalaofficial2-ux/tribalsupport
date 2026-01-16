@@ -4,250 +4,162 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VanaMala | Internal Portal</title>
-<!-- Modern Font -->
-<link href="https://fonts.googleapis.com" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --primary: #8d5d34;
-    --primary-dark: #5a2e0a;
-    --accent: #d4a373;
-    --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #3d2b1f 100%);
-    --glass: rgba(255, 255, 255, 0.08);
+  body{
+    font-family:Poppins,sans-serif;
+    background:linear-gradient(135deg,#1a1a1a,#3d2b1f);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg-gradient);
-    background-attachment: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #fff;
+  .card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px);
+    padding:40px;
+    border-radius:22px;
+    width:380px;
+    box-shadow:0 25px 50px rgba(0,0,0,.4);
   }
-
-  /* Decorative Background Elements */
-  body::before {
-    content: "";
-    position: absolute;
-    width: 300px; height: 300px;
-    background: var(--primary);
-    filter: blur(120px);
-    border-radius: 50%;
-    z-index: -1;
-    top: 10%; left: 10%;
-    opacity: 0.4;
+  h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#d4a373;
   }
-
-  .card {
-    background: var(--glass);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 24px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-    text-align: center;
-    transition: transform 0.3s ease;
+  input{
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.05);
+    color:#fff;
   }
-
-  h2 { font-weight: 600; margin-bottom: 25px; letter-spacing: 1px; color: var(--accent); }
-
-  .input-group { position: relative; margin-bottom: 20px; }
-
-  input {
-    width: 100%;
-    padding: 14px 18px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 12px;
-    color: #fff;
-    outline: none;
-    transition: 0.3s;
-    font-size: 0.9rem;
+  button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#8d5d34;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
   }
-
-  input:focus {
-    border-color: var(--accent);
-    background: rgba(255,255,255,0.1);
+  button:hover{background:#d4a373;color:#000;}
+  .error{
+    display:none;
+    color:#ff6b6b;
+    text-align:center;
+    margin-top:12px;
   }
-
-  button {
-    width: 100%;
-    padding: 14px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 10px;
+  #taskPage{display:none;}
+  .task-box{
+    margin-top:20px;
+    background:rgba(0,0,0,.25);
+    padding:18px;
+    border-radius:14px;
+    border-left:4px solid #d4a373;
   }
-
-  button:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
-  }
-
-  .error {
-    color: #ff6b6b;
-    font-size: 0.85rem;
-    margin-top: 15px;
-    display: none;
-    animation: shake 0.4s;
-  }
-
-  /* Task Page Styling */
-  #taskPage { display: none; text-align: left; }
-  
-  .user-info { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; }
-  
-  #role { font-size: 0.85rem; color: var(--accent); opacity: 0.9; }
-
-  .task-box {
-    background: rgba(0,0,0,0.2);
-    padding: 20px;
-    border-radius: 15px;
-    border-left: 4px solid var(--accent);
-    margin: 20px 0;
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
-
-  .insta-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.05);
-    padding: 12px;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 0.8rem;
-    transition: 0.3s;
-  }
-
-  .insta-link:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
-
-  .logout-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    margin-top: 25px;
-    font-size: 0.7rem;
-    padding: 8px;
-  }
-
-  @keyframes shake {
-    0%, 100% {transform: translateX(0);}
-    25% {transform: translateX(-5px);}
-    75% {transform: translateX(5px);}
+  a{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    text-decoration:none;
+    color:#fff;
+    font-size:.85rem;
   }
 </style>
 </head>
+
 <body>
 
 <div class="card" id="loginPage">
   <h2>VanaMala Portal</h2>
-  <div class="input-group">
-    <input id="empId" placeholder="Employee ID">
-  </div>
-  <div class="input-group">
-    <input id="password" type="password" placeholder="Password">
-  </div>
+  <input id="empId" placeholder="Employee ID">
+  <input id="password" type="password" placeholder="Password">
   <button onclick="login()">Access Dashboard</button>
-  <div class="error" id="error">Authentication Failed. Try again.</div>
+  <div class="error" id="error">Wrong ID or Password</div>
 </div>
 
 <div class="card" id="taskPage">
-  <div class="user-info">
-    <h2 id="userName" style="margin-bottom:5px; font-size: 1.4rem;"></h2>
-    <p id="userRole"></p>
-  </div>
-  
-  <p style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent);">Current Assignment</p>
+  <h2 id="userName"></h2>
+  <p id="userRole" style="color:#d4a373;font-size:.85rem;"></p>
+
   <div class="task-box" id="userTask"></div>
 
-  <a href="https://instagram.com/vanamala.official" target="_blank" class="insta-link">
-    📸 DM YOUR WORK TO @VANAMALA.OFFICIAL
+  <a href="https://instagram.com/fr._.tinesh" target="_blank">
+    📸 DM proof to @fr._.tinesh
   </a>
 
-  <button class="logout-btn" onclick="location.reload()">Secure Logout</button>
+  <button style="margin-top:20px;background:transparent;border:1px solid rgba(255,255,255,.3);" onclick="location.reload()">Logout</button>
 </div>
 
 <script>
 const employees = {
-  "VM-PH-001":{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"vm@gokul123",
-    task:"Research 3 NGOs with strong photography storytelling. Explain what makes their visuals impactful."},
 
-  "VM-PH-002":{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"vm@aditya123",
-    task:"Study visual consistency of 2 social brands. Note color, framing, emotion."},
+  "VM-PH-01":{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"gokul@vm",
+  task:"Research 3 NGOs with strong photography storytelling and summarize why their visuals work."},
 
-  /* FINANCE & BUDGETING */
-  "VM-FI-001":{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"vm@jeevan123",
-    task:"Research 2 NGO budgeting models suitable for student-led initiatives."},
+  "VM-PH-02":{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"aditya@vm",
+  task:"Study 2 social media brands and analyze their visual consistency."},
 
-  "VM-FI-002":{name:"Pralaksha Dash",role:"Co-Head – Finance & Budgeting",pass:"vm@pralaksha123",
-    task:"Analyze fund allocation methods used in small NGOs and suggest improvements."},
+  "VM-FI-01":{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"jeevan@vm",
+  task:"Research budgeting models suitable for student-led NGOs."},
 
-  /* EVENT MANAGEMENT */
-  "VM-EV-001":{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"vm@bavyesh123",
-    task:"Research 2 small-scale exhibitions. Note crowd handling and stall layout."},
+  "VM-FI-02":{name:"Pralaksha Dash",role:"Finance & Budgeting",pass:"pralaksha@vm",
+  task:"Analyze how NGOs manage funds transparently."},
 
-  "VM-EV-002":{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"vm@daiwik123",
-    task:"Find engagement ideas to attract students at school events."},
+  "VM-EV-01":{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"bavyesh@vm",
+  task:"Research 2 small exhibitions and note crowd flow strategies."},
 
-  /* SALES */
-  "VM-SA-001":{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"vm@ruhan123",
-    task:"Research pricing strategies for handmade products."},
+  "VM-EV-02":{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"daiwik@vm",
+  task:"Find creative engagement ideas for school-level events."},
 
-  "VM-SA-002":{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"vm@shreyas123",
-    task:"Compare 2 handmade product stalls and note sales techniques."},
+  "VM-SA-01":{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"ruhan@vm",
+  task:"Study pricing strategies for handmade products."},
 
-  /* TRIBAL RELATIONS */
-  "VM-TR-001":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"vm@nirvan123",
-    task:"Research 2 tribal communities near Telangana and their livelihood."},
+  "VM-SA-02":{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"shreyas@vm",
+  task:"Analyze stall layouts that increase impulse buying."},
 
-  "VM-TR-002":{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"vm@aaditi123",
-    task:"Study challenges faced by tribal artisans in marketing."},
+  "VM-TR-01":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"nirvan@vm",
+  task:"Research tribal communities near Telangana and their livelihoods."},
 
-  /* SOCIAL MEDIA */
-  "VM-SM-001":{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"vm@kanishka123",
-    task:"Analyze 3 Instagram pages doing social impact storytelling well."},
+  "VM-TR-02":{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"aaditi@vm",
+  task:"Study challenges faced by tribal artisans in marketing."},
 
-  "VM-SM-002":{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"vm@aanya123",
-    task:"Study caption styles that increase engagement on NGO posts."},
+  "VM-SM-01":{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"kanishka@vm",
+  task:"Analyze 3 Instagram pages doing social impact storytelling."},
 
-  /* LOGISTICS */
-  "VM-LG-001":{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"vm@savya123",
-    task:"Research low-cost logistics models used by rural NGOs."}
+  "VM-SM-02":{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"aanya@vm",
+  task:"Study caption formats that improve engagement."},
+
+  "VM-LO-01":{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"savya@vm",
+  task:"Research low-cost logistics models used by rural NGOs."}
 };
 
 function login(){
-  const id = document.getElementById('empId').value.toUpperCase();
-  const pw = document.getElementById('password').value;
-  const user = employees[id];
-  const err = document.getElementById('error');
+  const id=document.getElementById("empId").value.trim().toUpperCase();
+  const pw=document.getElementById("password").value.trim();
+  const user=employees[id];
+  const err=document.getElementById("error");
 
-  if(!user || user.pass !== pw){
+  if(!user || user.pass!==pw){
     err.style.display="block";
     return;
   }
 
-  document.getElementById('loginPage').style.display="none";
-  document.getElementById('taskPage').style.display="block";
+  document.getElementById("loginPage").style.display="none";
+  document.getElementById("taskPage").style.display="block";
 
-  document.getElementById('userName').innerText = user.name;
-  document.getElementById('userRole').innerText = user.role;
-  document.getElementById('userTask').innerText = user.task;
+  document.getElementById("userName").innerText=user.name;
+  document.getElementById("userRole").innerText=user.role;
+  document.getElementById("userTask").innerText=user.task;
 }
 </script>
+
 </body>
 </html>
