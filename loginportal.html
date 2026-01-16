@@ -176,7 +176,7 @@
   <div class="task-box" id="userTask"></div>
 
   <a href="https://instagram.com/vanamala.official" target="_blank" class="insta-link">
-    📸 DM proof your work to @vanamala.official
+    📸 DM YOUR WORK TO @VANAMALA.OFFICIAL
   </a>
 
   <button class="logout-btn" onclick="location.reload()">Secure Logout</button>
@@ -184,19 +184,50 @@
 
 <script>
 const employees = {
-  VM001:{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"alpha1", task:"Research 3 NGOs with strong photography storytelling. Explain what makes their visuals impactful."},
-  VM002:{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"alpha2", task:"Study visual consistency of 2 social brands. Note color, framing, emotion."},
-  VM003:{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"beta1", task:"Research 2 NGO budgeting models suitable for student-led initiatives."},
-  VM004:{name:"Pralaksha Dash",role:"Co-Head – Photography & Visual Media",pass:"alpha3", task:"Analyze how photography influences trust in social initiatives."},
-  VM005:{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"gamma1", task:"Research 2 small-scale exhibitions. Note crowd handling and stall layout."},
-  VM006:{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"gamma2", task:"Find engagement ideas to attract students at school events."},
-  VM007:{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"delta1", task:"Research pricing strategies for handmade products."},
-  VM008:{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"delta2", task:"Compare 2 handmade product stalls and note sales techniques."},
-  VM009:{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"epsilon1", task:"Research 2 tribal communities near Telangana and their livelihood."},
-  VM010:{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"epsilon2", task:"Study challenges faced by tribal artisans in marketing."},
-  VM011:{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"zeta1", task:"Analyze 3 Instagram pages doing social impact storytelling well."},
-  VM012:{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"zeta2", task:"Study caption styles that increase engagement on NGO posts."},
-  VM013:{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"theta1", task:"Research low-cost logistics models used by rural NGOs."}
+  "VM-PH-001":{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"vm@gokul123",
+    task:"Research 3 NGOs with strong photography storytelling. Explain what makes their visuals impactful."},
+
+  "VM-PH-002":{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"vm@aditya123",
+    task:"Study visual consistency of 2 social brands. Note color, framing, emotion."},
+
+  /* FINANCE & BUDGETING */
+  "VM-FI-001":{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"vm@jeevan123",
+    task:"Research 2 NGO budgeting models suitable for student-led initiatives."},
+
+  "VM-FI-002":{name:"Pralaksha Dash",role:"Co-Head – Finance & Budgeting",pass:"vm@pralaksha123",
+    task:"Analyze fund allocation methods used in small NGOs and suggest improvements."},
+
+  /* EVENT MANAGEMENT */
+  "VM-EV-001":{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"vm@bavyesh123",
+    task:"Research 2 small-scale exhibitions. Note crowd handling and stall layout."},
+
+  "VM-EV-002":{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"vm@daiwik123",
+    task:"Find engagement ideas to attract students at school events."},
+
+  /* SALES */
+  "VM-SA-001":{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"vm@ruhan123",
+    task:"Research pricing strategies for handmade products."},
+
+  "VM-SA-002":{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"vm@shreyas123",
+    task:"Compare 2 handmade product stalls and note sales techniques."},
+
+  /* TRIBAL RELATIONS */
+  "VM-TR-001":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"vm@nirvan123",
+    task:"Research 2 tribal communities near Telangana and their livelihood."},
+
+  "VM-TR-002":{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"vm@aaditi123",
+    task:"Study challenges faced by tribal artisans in marketing."},
+
+  /* SOCIAL MEDIA */
+  "VM-SM-001":{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"vm@kanishka123",
+    task:"Analyze 3 Instagram pages doing social impact storytelling well."},
+
+  "VM-SM-002":{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"vm@aanya123",
+    task:"Study caption styles that increase engagement on NGO posts."},
+
+  /* LOGISTICS */
+  "VM-LG-001":{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"vm@savya123",
+    task:"Research low-cost logistics models used by rural NGOs."}
 };
 
 function login(){
@@ -218,6 +249,5 @@ function login(){
   document.getElementById('userTask').innerText = user.task;
 }
 </script>
-
 </body>
 </html>
