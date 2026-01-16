@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VanaMala Internal Portal</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f5efe6;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  width:360px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+h2{margin-bottom:10px;color:#5a2e0a}
+input,button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+}
+button{
+  background:#5a2e0a;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+.error{color:red;margin-top:10px;display:none}
+#taskPage{display:none}
+.task{
+  background:#f3e6d8;
+  padding:15px;
+  border-radius:8px;
+  margin-top:15px;
+}
+.insta{
+  margin-top:15px;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="loginPage">
+  <h2>VanaMala Access</h2>
+  <input id="empId" placeholder="Employee ID">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div class="error" id="error">Invalid credentials</div>
+</div>
+
+<div class="card" id="taskPage">
+  <h2 id="name"></h2>
+  <p id="role"></p>
+  <div class="task" id="task"></div>
+  <div class="insta">
+    📩 DM proof on Instagram:<br>
+    <a href="https://instagram.com/fr._.tinesh" target="_blank">
+      @fr._.tinesh
+    </a>
+  </div>
+</div>
+
+<script>
+const employees = {
+  VM001:{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"alpha1",
+    task:"Research 3 NGOs with strong photography storytelling. Explain what makes their visuals impactful."},
+
+  VM002:{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"alpha2",
+    task:"Study visual consistency of 2 social brands. Note color, framing, emotion."},
+
+  VM003:{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"beta1",
+    task:"Research 2 NGO budgeting models suitable for student-led initiatives."},
+
+  VM004:{name:"Pralaksha Dash",role:"Co-Head – Photography & Visual Media",pass:"alpha3",
+    task:"Analyze how photography influences trust in social initiatives."},
+
+  VM005:{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"gamma1",
+    task:"Research 2 small-scale exhibitions. Note crowd handling and stall layout."},
+
+  VM006:{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"gamma2",
+    task:"Find engagement ideas to attract students at school events."},
+
+  VM007:{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"delta1",
+    task:"Research pricing strategies for handmade products."},
+
+  VM008:{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"delta2",
+    task:"Compare 2 handmade product stalls and note sales techniques."},
+
+  VM009:{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"epsilon1",
+    task:"Research 2 tribal communities near Telangana and their livelihood."},
+
+  VM010:{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"epsilon2",
+    task:"Study challenges faced by tribal artisans in marketing."},
+
+  VM011:{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"zeta1",
+    task:"Analyze 3 Instagram pages doing social impact storytelling well."},
+
+  VM012:{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"zeta2",
+    task:"Study caption styles that increase engagement on NGO posts."},
+
+  VM013:{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"theta1",
+    task:"Research low-cost logistics models used by rural NGOs."}
+};
+
+function login(){
+  const id = empId.value;
+  const pw = password.value;
+  const user = employees[id];
+
+  if(!user || user.pass !== pw){
+    error.style.display="block";
+    return;
+  }
+
+  loginPage.style.display="none";
+  taskPage.style.display="block";
+
+  name.innerText = "Welcome, " + user.name;
+  role.innerText = user.role;
+  task.innerText = user.task;
+}
+</script>
+
+</body>
+</html>
