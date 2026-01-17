@@ -30,7 +30,7 @@
     margin-bottom:25px;
     color:#d4a373;
   }
-  input{
+  input, textarea{
     width:100%;
     padding:14px;
     margin-bottom:18px;
@@ -38,6 +38,7 @@
     border:1px solid rgba(255,255,255,.2);
     background:rgba(255,255,255,.05);
     color:#fff;
+    resize:none;
   }
   button{
     width:100%;
@@ -91,6 +92,11 @@
 
   <div class="task-box" id="userTask"></div>
 
+  <!-- NEW WORK ENTRY -->
+  <textarea id="workDone" placeholder="Type your work done here..." rows="4"></textarea>
+  <input id="hoursSpent" type="number" placeholder="Hours spent">
+  <button onclick="submitWork()">Submit Work</button>
+
   <a href="https://instagram.com/vanamala.official" target="_blank">
     📸 DM your work to @vanamala.official
     Deadline : 3 Febraury 2026
@@ -100,44 +106,33 @@
 </div>
 
 <script>
-const employees = {
+const webAppURL = "https://script.google.com/macros/s/AKfycbxeW_7cUgqB0KyjBvwPTmNYn72uolIeYe-BXyglXA6jQPh2m9zMzp0r41dhWrRu1tWD/exec";
 
+const employees = {
   "VM-PH-01":{name:"Sai Gokul",role:"Head – Photography & Visual Media",pass:"gokul@vm",
   task:"Research 3 NGOs with strong photography storytelling and summarize why their visuals work."},
-
   "VM-PH-02":{name:"Aditya Singathi",role:"Co-Head – Photography & Visual Media",pass:"aditya@vm",
   task:"Study 2 social media brands and analyze their visual consistency."},
-
   "VM-FI-01":{name:"Jeevan Reddy",role:"Head – Finance & Budgeting",pass:"jeevan@vm",
   task:"Research budgeting models suitable for student-led NGOs."},
-
   "VM-FI-02":{name:"Pralaksha Dash",role:"Finance & Budgeting",pass:"pralaksha@vm",
   task:"Analyze how NGOs manage funds transparently."},
-
   "VM-EV-01":{name:"Bavyesh Papetlla",role:"Head – Event Management",pass:"bavyesh@vm",
   task:"Research 2 small exhibitions and note crowd flow strategies."},
-
   "VM-EV-02":{name:"Daiwik Paida",role:"Co-Head – Event Management",pass:"daiwik@vm",
   task:"Find creative engagement ideas for school-level events."},
-
   "VM-SA-01":{name:"Ruhan Kanjani",role:"Head – Sales & Stall Management",pass:"ruhan@vm",
   task:"Study pricing strategies for handmade products."},
-
   "VM-SA-02":{name:"Shreyas Bitra",role:"Co-Head – Sales & Stall Management",pass:"shreyas@vm",
   task:"Analyze stall layouts that increase impulse buying."},
-
   "VM-TR-01":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"nirvan@vm",
   task:"Research tribal communities near Telangana and their livelihoods."},
-
   "VM-TR-02":{name:"Aaditi Behera",role:"Co-Head – Tribal Relations",pass:"aaditi@vm",
   task:"Study challenges faced by tribal artisans in marketing."},
-
   "VM-SM-01":{name:"Kanishka Kodicherla",role:"Head – Social Media & Communications",pass:"kanishka@vm",
   task:"Analyze 3 Instagram pages doing social impact storytelling."},
-
   "VM-SM-02":{name:"Aanya Singh",role:"Co-Head – Social Media & Communications",pass:"aanya@vm",
   task:"Study caption formats that improve engagement."},
-
   "VM-LO-01":{name:"Savya Kumar",role:"Head – Logistics & Transport",pass:"savya@vm",
   task:"Research low-cost logistics models used by rural NGOs."}
 };
@@ -160,9 +155,43 @@ function login(){
   document.getElementById("userRole").innerText=user.role;
   document.getElementById("userTask").innerText=user.task;
 }
+
+// --- Submit Work to Google Sheet ---
+function submitWork(){
+  const work = document.getElementById("workDone").value.trim();
+  const hours = document.getElementById("hoursSpent").value.trim();
+
+  if(!work || !hours){
+    alert("Please enter both work done and hours spent!");
+    return;
+  }
+
+  const empId = document.getElementById("empId").value.trim().toUpperCase();
+  const user = employees[empId];
+
+  fetch(webAppURL, {
+    method: "POST",
+    body: JSON.stringify({
+      empId: empId,
+      name: user.name,
+      role: user.role,
+      assignedTask: user.task,
+      workDone: work,
+      hours: hours
+    })
+  }).then(res=>res.json())
+    .then(data=>{
+      if(data.status==="success"){
+        alert("Work submitted successfully!");
+        location.reload(); // logs out employee
+      } else {
+        alert("Error submitting work, try again!");
+      }
+    }).catch(err=>{
+      alert("Error: "+err);
+    });
+}
 </script>
 
 </body>
 </html>
-
-
