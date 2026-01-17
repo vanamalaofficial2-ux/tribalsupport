@@ -146,7 +146,9 @@ transition: var(--transition-smooth);
 <h3 id="welcome-name"></h3>
 <p id="welcome-role"></p>
 <div class="task-box">
-<strong>Active Task:</strong> Record monthly analytics including AI utilization metrics.
+<!-- Dynamic task content injected here via JS -->
+<strong id="active-task-title">Active Task:</strong> 
+<span id="active-task-details"></span>
 </div>
 <textarea id="work-done" rows="4" placeholder="Briefly describe your activities..."></textarea>
 <!-- The submit button for 'success' still uses an inline green gradient from your
@@ -155,18 +157,18 @@ previous code which provides good contrast -->
 linear-gradient(135deg, #10b981, #059669)">SUBMIT DATA</button>
 </div>
 
-<!-- Founders/Co-Founders Dashboard (Hidden by default) -->
+<!-- Founders/Co-Founders/CEO Dashboard (Hidden by default) -->
 <div id="founders-dashboard" class="container hidden">
     <h2>Leadership Hub</h2>
     <p>Strategic Overview</p>
     <!-- Meeting Points Box (Visible to CEO and Founders/Co-Founders) -->
     <div class="task-box">
         <strong>Today's Meeting Points:</strong> Discuss Q3 projections and finalize partnership details.<br>
-        <button onclick="window.open('https://meet.google.com/qdb-fict-aku')">JOIN TODAY'S MEETING</button>
+        <button onclick="window.open('https://meet.google.com')">JOIN TODAY'S MEETING</button>
     </div>
     
     <!-- CEO Specific Button (Only displayed by JS logic for the CEO) -->
-    <button id="ceo-analytics-btn" class="ceo-btn hidden" onclick="window.open('https://docs.google.com/spreadsheets/d/10zNRI5zDsZHUsxe7KoRuLBL-_kL-_h5vOgwd9HCaF5o/edit?gid=0#gid=0')">
+    <button id="ceo-analytics-btn" class="ceo-btn hidden" onclick="window.open('https://docs.google.com')">
         VIEW REAL-TIME ANALYTICS
     </button>
 
@@ -176,25 +178,25 @@ linear-gradient(135deg, #10b981, #059669)">SUBMIT DATA</button>
 
 <script>
 const employees = {
-"VM-PH-01": { name: "Sai Gokul", role: "Head – Photography", pass: "gokul@vm" },
-"VM-PH-02": { name: "Aditya Singathi", role: "Co-Head – Photography", pass: "aditya@vm" },
-"VM-FI-01": { name: "Jeevan Reddy", role: "Head – Finance", pass: "jeevan@vm" },
-"VM-FI-02": { name: "Pralaksha Dash", role: "Co-Head - Finance", pass: "pralaksha@vm" },
-"VM-EV-01": { name: "Bavyesh Papetlla", role: "Head – Event Management", pass: "bavyesh@vm" },
-"VM-EV-02": { name: "Daiwik Paida", role: "Co-Head – Event Management", pass: "daiwik@vm" },
-"VM-SA-01": { name: "Ruhan Kanjani", role: "Head – Sales", pass: "ruhan@vm" },
-"VM-SA-02": { name: "Shreyas Bitra", role: "Co-Head – Sales", pass: "shreyas@vm" },
-"VM-TR-01": { name: "Nirvan Krivi", role: "Head – Tribal Relations", pass: "nirvan@vm" },
-"VM-TR-02": { name: "Aaditi Behera", role: "Co-Head – Tribal Relations", pass: "aaditi@vm" },
-"VM-SM-01": { name: "Kanishka Kodicherla", role: "Head – Social Media", pass: "kanishka@vm" },
-"VM-SM-02": { name: "Aanya Singh", role: "Co-Head – Social Media", pass: "aanya@vm" },
-"VM-LO-01": { name: "Savya Kumar", role: "Head – Logistics", pass: "savya@vm" },
+"VM-PH-01": { name: "Sai Gokul", role: "Head – Photography", pass: "gokul@vm", activeTask: "Create IRIS MUN photo checklist (what shots needed)" },
+"VM-PH-02": { name: "Aditya Singathi", role: "Co-Head – Photography", pass: "aditya@vm", activeTask: "Make sample poster visuals using past photos" },
+"VM-FI-01": { name: "Jeevan Reddy", role: "Head – Finance", pass: "jeevan@vm", activeTask: "Make Google Sheet budget for 1 / 2 / 3 days" },
+"VM-FI-02": { name: "Pralaksha Dash", role: "Co-Head - Finance", pass: "pralaksha@vm", activeTask: "Create expense tracker sheet" },
+"VM-EV-01": { name: "Bavyesh Papetlla", role: "Head – Event Management", pass: "bavyesh@vm", activeTask: "Draft IRIS MUN coordination questions" },
+"VM-EV-02": { name: "Daiwik Paida", role: "Co-Head – Event Management", pass: "daiwik@vm", activeTask: "Create duty roster (who works which day)" },
+"VM-SA-01": { name: "Ruhan Kanjani", role: "Head – Sales", pass: "ruhan@vm", activeTask: "Decide sales pitch lines (what to say to buyers)" },
+"VM-SA-02": { name: "Shreyas Bitra", role: "Co-Head – Sales", pass: "shreyas@vm", activeTask: "Design payment flow (cash / UPI)" },
+"VM-TR-01": { name: "Nirvan Krivi", role: "Head – Tribal Relations", pass: "nirvan@vm", activeTask: "Draft formal outreach message to tribals" },
+"VM-TR-02": { name: "Aaditi Behera", role: "Co-Head – Tribal Relations", pass: "aaditi@vm", activeTask: "Research nearby Telangana tribal craft groups (online)" },
+"VM-SM-01": { name: "Kanishka Kodicherla", role: "Head – Social Media", pass: "kanishka@vm", activeTask: "Plan IRIS MUN content calendar" },
+"VM-SM-02": { name: "Aanya Singh", role: "Co-Head – Social Media", pass: "aanya@vm", activeTask: "Create Canva post templates" },
+"VM-LO-01": { name: "Savya Kumar", role: "Head – Logistics", pass: "savya@vm", activeTask: "Make online checklist of stall materials" },
 "VM-CEO-01": { name: "Tinesh Reddy", role: "CEO", pass: "ceo@vm" },
 // New Founders & Co-Founders with a specific role
 "VM-F-01": { name: "Medha Shree", role: "Founder_CoFounder", pass: "medha@vm" },
 "VM-F-02": { name: "Vardhan Reddy", role: "Founder_CoFounder", pass: "vardhan@vm" },
 "VM-CF-01": { name: "Dimple Priya", role: "Founder_CoFounder", pass: "dimple@vm" },
-"VM-CF-02": { name: "Shravya Shre", role: "Founder_CoFounder", pass: "shravya@vm" },
+"VM-CF-02": { name: "Shravya Shree", role: "Founder_CoFounder", pass: "shravya@vm" },
 "VM-CF-03": { name: "Naga Shaurya Veragoni", role: "Founder_CoFounder", pass: "shaurya@vm" }
 };
 let currentEmp = null;
@@ -220,6 +222,8 @@ function login() {
             document.getElementById('emp-dashboard').classList.remove('hidden');
             document.getElementById('welcome-name').innerText = "Hi, " + currentEmp.name;
             document.getElementById('welcome-role').innerText = currentEmp.role;
+            // Inject the specific task for this employee
+            document.getElementById('active-task-details').innerText = currentEmp.activeTask;
         }
     } else {
         alert("Authentication Failed. Please verify credentials.");
