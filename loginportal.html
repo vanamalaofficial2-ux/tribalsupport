@@ -2,129 +2,146 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VanaMala | Internal Portal</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>VanaMala Internal Portal</title>
 
 <style>
 body{
-  font-family:Poppins,sans-serif;
-  background:linear-gradient(135deg,#1a1a1a,#3d2b1f);
-  min-height:100vh;
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
-  color:#fff;
+  height:100vh;
 }
 .card{
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(14px);
-  padding:40px;
-  border-radius:22px;
-  width:380px;
-  box-shadow:0 25px 50px rgba(0,0,0,.4);
+  background:#1c1c1c;
+  padding:25px;
+  width:360px;
+  border-radius:10px;
 }
-h2{text-align:center;color:#d4a373}
-input,textarea{
-  width:100%;padding:14px;margin-bottom:18px;
-  border-radius:12px;border:1px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.05);color:#fff;
+input,textarea,button{
+  width:100%;
+  margin:8px 0;
+  padding:10px;
 }
 button{
-  width:100%;padding:14px;border:none;border-radius:12px;
-  background:#8d5d34;color:#fff;font-weight:600;cursor:pointer;
+  background:#c08b3e;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
 }
-button:hover{background:#d4a373;color:#000}
-.error{display:none;color:#ff6b6b;text-align:center}
-#taskPage{display:none}
-.task-box{
-  background:rgba(0,0,0,.25);padding:18px;border-radius:14px;
-  border-left:4px solid #d4a373;margin-bottom:20px;
-}
+#error{color:red;display:none;}
+#taskPage{display:none;}
 </style>
 </head>
 
 <body>
 
 <div class="card" id="loginPage">
-  <h2>VanaMala Portal</h2>
+  <h3>VanaMala Login</h3>
   <input id="empId" placeholder="Employee ID">
   <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Access Dashboard</button>
-  <div class="error" id="error">Wrong ID or Password</div>
+  <button onclick="login()">Login</button>
+  <div id="error">Wrong ID or Password</div>
 </div>
 
 <div class="card" id="taskPage">
-  <h2 id="userName"></h2>
-  <p id="userRole" style="color:#d4a373;font-size:.85rem;"></p>
-  <div class="task-box" id="userTask"></div>
+  <h3 id="name"></h3>
+  <p id="role"></p>
+  <b>Assigned Task:</b>
+  <p id="task"></p>
 
-  <textarea id="workDone" placeholder="Work done..."></textarea>
-  <input id="hoursSpent" type="number" placeholder="Hours spent">
+  <textarea id="workDone" placeholder="Work done"></textarea>
+  <input id="hours" placeholder="Time spent (hrs)">
   <button onclick="submitWork()">Submit Work</button>
 
-  <button style="margin-top:15px;background:transparent;border:1px solid #aaa"
-    onclick="location.reload()">Logout</button>
+  <button onclick="location.reload()">Logout</button>
 </div>
 
 <script>
-const webAppURL =
+/* ✅ YOUR DEPLOYED APPS SCRIPT URL */
+const WEB_APP_URL =
 "https://script.google.com/macros/s/AKfycbxA0GIpghtcblEEx2z713YV_qS8lOf930YQJauHJgNjTHZGjdWQUrOSY9zNqPctP5TE/exec";
 
+/* ✅ ALL IDS + PASSWORDS (INCLUDING CEO) */
 const employees = {
-  "VM-PH-01":{name:"Sai Gokul",role:"Head – Photography",pass:"gokul@vm",task:"Research NGO visuals"},
-  "VM-PH-02":{name:"Aditya Singathi",role:"Co-Head – Photography",pass:"aditya@vm",task:"Visual branding study"},
-  "VM-FI-01":{name:"Jeevan Reddy",role:"Head – Finance",pass:"jeevan@vm",task:"Budget models"},
-  "VM-FI-02":{name:"Pralaksha Dash",role:"Finance",pass:"pralaksha@vm",task:"Transparency research"},
-  "VM-EV-01":{name:"Bavyesh Papetlla",role:"Head – Events",pass:"bavyesh@vm",task:"Exhibition research"},
-  "VM-EV-02":{name:"Daiwik Paida",role:"Co-Head – Events",pass:"daiwik@vm",task:"Engagement ideas"},
-  "VM-SA-01":{name:"Ruhan Kanjani",role:"Head – Sales",pass:"ruhan@vm",task:"Pricing study"},
-  "VM-SA-02":{name:"Shreyas Bitra",role:"Sales",pass:"shreyas@vm",task:"Stall layout"},
-  "VM-TR-01":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"nirvan@vm",task:"Tribal research"},
-  "VM-TR-02":{name:"Aaditi Behera",role:"Tribal Relations",pass:"aaditi@vm",task:"Artisan challenges"},
-  "VM-SM-01":{name:"Kanishka Kodicherla",role:"Head – Social Media",pass:"kanishka@vm",task:"Instagram analysis"},
-  "VM-SM-02":{name:"Aanya Singh",role:"Social Media",pass:"aanya@vm",task:"Caption study"},
-  "VM-LO-01":{name:"Savya Kumar",role:"Head – Logistics",pass:"savya@vm",task:"Logistics models"},
-
-  /* CEO — YOU */
   "VM-CEO-01":{name:"Tinesh Reddy",role:"Founder & CEO",pass:"ceo@vm",
-  task:"Review all departments & performance"}
+    task:"Review team submissions and prepare weekly summary."},
+
+  "VM-PH-01":{name:"Sai Gokul",role:"Head – Photography",pass:"gokul@vm",
+    task:"2026 lo 'Deepfake' tech peaks ki vellindi. Manam oka photo release chesthe, adi 100% human-shot ani audience ela nammali? Mana visuals ki 'Digital Provenance' (ante idi fake kadu ani proof) create cheyadaniki mana workflow lo em changes techcharu"},
+
+  "VM-PH-02":{name:"Aditya Singathi",role:"Co-Head – Photography",pass:"aditya@vm",
+    task:"Mee iddariki (Head & Co-Head) oka creative visual direction lo opinion mismatch vasthe—ante okaru 'Minimalist' kavali antaru, inkokaru 'Hyper-realistic' kavali antaru—appudu project quality debba tinakunda meeru tiskune 'Tie-breaking' decision process enti?"},
+
+  "  "VM-FI-01":{name:"Jeevan Reddy",role:"Head – Finance",pass:"jeevan@vm",
+    task:"Calculate the 'Break-even Point' for the IRIS MUN stall, factoring in the stall fee, transport, and 3-day staff maintenance vs projected sales."},
+
+  "VM-FI-02":{name:"Pralaksha Dash",role:"Finance Team",pass:"pralaksha@vm",
+    task:"Set up a digital payment tracking system for the stall that can handle high-frequency small transactions without network lag during peak MUN breaks."},
+
+  "VM-EV-01":{name:"Bavyesh Papetlla",role:"Head – Events",pass:"bavyesh@vm",
+    task:"Design a 'Vanamala Experience' stall that stands out in a crowded MUN venue, ensuring the layout allows for both product browsing and storytelling."},
+
+  "VM-EV-02":{name:"Daiwik Paida",role:"Event Team",pass:"daiwik@vm",
+    task:"Create a 'Shift & Logistics' roster for the 3-day event to ensure the stall is never unattended during high-traffic delegate lunch hours."},
+
+  "VM-SA-01":{name:"Ruhan Kanjani",role:"Head – Sales",pass:"ruhan@vm",
+    task:"Develop a 'MUN Delegate Pitch'—train the team to explain the tribal origin of Vanamala products in under 60 seconds to busy students."},
+
+  "VM-SA-02":{name:"Shreyas Bitra",role:"Sales Team",pass:"shreyas@vm",
+    task:"Curate a 'Student-Friendly' product bundle (e.g., sustainable desk accessories) priced specifically for the typical MUN delegate's pocket money budget."},
+
+  "VM-TR-01":{name:"Nirvan Krivi",role:"Head – Tribal Relations",pass:"nirvan@vm",
+    task:"Select products that align with the 'Sustainability' themes of MUN, ensuring each item has a tag explaining which tribal community it supports."},
+
+  "VM-TR-02":{name:"Aaditi Behera",role:"Tribal Relations",pass:"aaditi@vm",
+    task:"Prepare 'Impact Stories'—short, printable cards for each product that tell the human story of the artisan to create an emotional connection with buyers."},
+
+  "VM-SM-01":{name:"Kanishka Kodicherla",role:"Head – Social Media",pass:"kanishka@vm",
+    task:"Plan an 'Instagram Live' schedule from the IRIS MUN stall and design a 'Tag Vanamala to Win' contest to increase our follower count during the event."},
+
+  "VM-SM-02":{name:"Aanya Singh",role:"Social Media Team",pass:"aanya@vm",
+    task:"Design a 'Photo-Op' corner at the stall (Instagrammable spot) that encourages delegates to take pictures with our products and tag @vanamala.official."},
+
+  "VM-LO-01":{name:"Savya Kumar",role:"Logistics Head",pass:"savya@vm",
+    task:"Manage the 'Last-Mile' delivery of fragile inventory to the IRIS MUN venue and plan the restock route if top-selling items run out on Day 1."}
+
 };
+
+let currentUser=null;
 
 function login(){
   const id=empId.value.trim().toUpperCase();
   const pw=password.value.trim();
-  const user=employees[id];
-  if(!user || user.pass!==pw){
+  if(!employees[id] || employees[id].pass!==pw){
     error.style.display="block";return;
   }
+  currentUser=employees[id];
   loginPage.style.display="none";
   taskPage.style.display="block";
-  userName.innerText=user.name;
-  userRole.innerText=user.role;
-  userTask.innerText=user.task;
+  name.innerText=currentUser.name;
+  role.innerText=currentUser.role;
+  task.innerText=currentUser.task;
 }
 
 function submitWork(){
-  const empIdVal=empId.value.trim().toUpperCase();
-  const u=employees[empIdVal];
-  fetch(webAppURL,{
+  fetch(WEB_APP_URL,{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
-      empId:empIdVal,
-      name:u.name,
-      role:u.role,
-      task:u.task,
+      empId:empId.value.toUpperCase(),
+      name:currentUser.name,
+      role:currentUser.role,
+      assignedTask:currentUser.task,
       workDone:workDone.value,
-      hours:hoursSpent.value
+      hours:hours.value
     })
   })
   .then(r=>r.json())
-  .then(()=>{alert("Submitted");location.reload()})
-  .catch(()=>alert("Submit failed"));
+  .then(()=>{alert("Submitted ✅");location.reload();});
 }
 </script>
+
 </body>
 </html>
