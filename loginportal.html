@@ -1,245 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VanaMala Portal 2026</title>
-    <!-- Using a modern font for a clean aesthetic -->
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <style>
-        :root {
-            /* Brown/Orange VanaMala branding theme */
-            --primary: #FF8C00; /* Deep Orange/Brown Accent */
-            --secondary: #D2691E; /* Chocolate Brown */
-            --bg-dark: #2a210f; /* Warm, deep background */
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text: #FAEBD7; /* Antique White for contrast */
-            --text-muted: #D2B48C; /* Tan for muted text */
-            /* Add smooth transitions globally where applicable */
-            --transition-smooth: all 0.4s ease-in-out;
-        }
-
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: radial-gradient(circle at top left, #362e1c, var(--bg-dark));
-            color: var(--text);
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0;
-            overflow-x: hidden;
-            transition: var(--transition-smooth);
-        }
-
-        /* Ambient Glow Backgrounds (Brown glow now) */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -10%; left: -10%;
-            width: 40%; height: 40%;
-            background: radial-gradient(circle, rgba(255, 140, 0, 0.15), transparent);
-            z-index: -1;
-            transition: var(--transition-smooth);
-        }
-
-        .container { 
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 40px; 
-            border-radius: 24px; 
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            width: 100%; 
-            max-width: 420px; 
-            text-align: center;
-            /* Added smoother transition for potential transform/opacity changes if implemented with JS */
-            transition: var(--transition-smooth), opacity 0.5s ease-out; 
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hidden { 
-            display: none; 
-            /* Note: Transitions don't work well with display: none, JS handles the visibility */
-        }
-
-        h2 { font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
-        p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
-
-        input, textarea { 
-            width: 100%; 
-            padding: 14px 18px; 
-            margin: 12px 0; 
-            background: rgba(42, 33, 15, 0.6); /* Use a warm dark color for inputs */
-            border: 1px solid var(--glass-border);
-            border-radius: 12px; 
-            color: white;
-            font-size: 15px;
-            /* Smooth transition for input focus states */
-            transition: var(--transition-smooth);
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.2); /* Enhanced glow effect */
-        }
-
-        button { 
-            width: 100%; 
-            padding: 14px; 
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; 
-            color: white; 
-            cursor: pointer; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            margin-top: 16px;
-            font-size: 16px;
-            /* Extremely smooth transition for buttons */
-            transition: var(--transition-smooth);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative; /* Needed for subtle active/click feedback */
-            overflow: hidden;
-        }
-
-        button:hover { 
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 25px -10px var(--primary);
-            filter: brightness(1.1);
-        }
-        
-        button:active {
-            transform: translateY(0px); /* Smooth press down effect */
-            box-shadow: 0 5px 10px -5px var(--primary);
-        }
-
-        /* Specific CEO button style within the overall theme */
-        .ceo-btn { 
-            background: #5c4033; /* A dedicated darker brown for CEO actions */
-            margin-top: 10px; 
-            text-transform: none; 
-        }
-        .ceo-btn:hover { background: #7b5e57; box-shadow: 0 12px 25px -10px #5c4033; }
-        .ceo-btn:active { background: #5c4033; }
-
-
-        .task-box { 
-            background: rgba(210, 180, 140, 0.1); 
-            padding: 16px; 
-            border-radius: 12px; 
-            text-align: left; 
-            font-size: 14px; 
-            margin-bottom: 20px; 
-            border-left: 4px solid var(--primary);
-            color: var(--text);
-            transition: var(--transition-smooth);
-        }
-
-        #welcome-name { font-size: 24px; margin-bottom: 4px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanaMala Portal 2026</title>
+<!-- Using a modern font for a clean aesthetic -->
+<link href="https://fonts.googleapis.com" rel="stylesheet">
+<style>
+:root {
+/* Brown/Orange VanaMala branding theme */
+--primary: #FF8C00; /* Deep Orange/Brown Accent */
+--secondary: #D2691E; /* Chocolate Brown */
+--bg-dark: #2a210f; /* Warm, deep background */
+--glass-bg: rgba(255, 255, 255, 0.05);
+--glass-border: rgba(255, 255, 255, 0.1);
+--text: #FAEBD7; /* Antique White for contrast */
+--text-muted: #D2B48C; /* Tan for muted text */
+/* Add smooth transitions globally where applicable */
+--transition-smooth: all 0.4s ease-in-out;
+}
+body {
+font-family: 'Plus Jakarta Sans', sans-serif;
+background: radial-gradient(circle at top left, #362e1c, var(--bg-dark));
+color: var(--text);
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+margin: 0;
+overflow-x: hidden;
+transition: var(--transition-smooth);
+}
+/* Ambient Glow Backgrounds (Brown glow now) */
+body::before {
+content: '';
+position: fixed;
+top: -10%; left: -10%;
+width: 40%; height: 40%;
+background: radial-gradient(circle, rgba(255, 140, 0, 0.15), transparent);
+z-index: -1;
+transition: var(--transition-smooth);
+}
+.container {
+background: var(--glass-bg);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+padding: 40px;
+border-radius: 24px;
+border: 1px solid var(--glass-border);
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+width: 100%;
+max-width: 420px;
+text-align: center;
+/* Added smoother transition for potential transform/opacity changes if implemented
+with JS */
+transition: var(--transition-smooth), opacity 0.5s ease-out;
+opacity: 1;
+transform: translateY(0);
+}
+.hidden {
+display: none;
+/* Note: Transitions don't work well with display: none, JS handles the visibility */
+}
+h2 { font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+input, textarea {
+width: 100%;
+padding: 14px 18px;
+margin: 12px 0;
+background: rgba(42, 33, 15, 0.6); /* Use a warm dark color for inputs */
+border: 1px solid var(--glass-border);
+border-radius: 12px;
+color: white;
+font-size: 15px;
+/* Smooth transition for input focus states */
+transition: var(--transition-smooth);
+}
+input:focus, textarea:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.2); /* Enhanced glow effect */
+}
+button {
+width: 100%;
+padding: 14px;
+background: linear-gradient(135deg, var(--primary), var(--secondary));
+border: none;
+color: white;
+cursor: pointer;
+border-radius: 12px;
+font-weight: 600;
+margin-top: 16px;
+font-size: 16px;
+/* Extremely smooth transition for buttons */
+transition: var(--transition-smooth);
+text-transform: uppercase;
+letter-spacing: 1px;
+position: relative; /* Needed for subtle active/click feedback */
+overflow: hidden;
+}
+button:hover {
+transform: translateY(-2px) scale(1.02);
+box-shadow: 0 12px 25px -10px var(--primary);
+filter: brightness(1.1);
+}
+button:active {
+transform: translateY(0px); /* Smooth press down effect */
+box-shadow: 0 5px 10px -5px var(--primary);
+}
+/* Specific CEO button style within the overall theme */
+.ceo-btn {
+background: #5c4033; /* A dedicated darker brown for CEO actions */
+margin-top: 10px;
+text-transform: none;
+}
+.ceo-btn:hover { background: #7b5e57; box-shadow: 0 12px 25px -10px #5c4033; }
+.ceo-btn:active { background: #5c4033; }
+.task-box {
+background: rgba(210, 180, 140, 0.1);
+padding: 16px;
+border-radius: 12px;
+text-align: left;
+font-size: 14px;
+margin-bottom: 20px;
+border-left: 4px solid var(--primary);
+color: var(--text);
+transition: var(--transition-smooth);
+}
+#welcome-name { font-size: 24px; margin-bottom: 4px; }
+</style>
 </head>
 <body>
 
-    <!-- Login Page -->
-    <div id="login-page" class="container">
-        <h2>VanaMala</h2>
-        <p>Corporate Portal • 2026 Edition</p>
-        <input type="text" id="empID" placeholder="Employee ID">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Enter Dashboard</button>
+<!-- Login Page -->
+<div id="login-page" class="container">
+<h2>VanaMala</h2>
+<p>Corporate Portal • 2026 Edition</p>
+<input type="text" id="empID" placeholder="Employee ID">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Enter Dashboard</button>
+</div>
+
+<!-- Employee Dashboard -->
+<div id="emp-dashboard" class="container hidden">
+<h3 id="welcome-name"></h3>
+<p id="welcome-role"></p>
+<div class="task-box">
+<strong>Active Task:</strong> Record monthly analytics including AI utilization metrics.
+</div>
+<textarea id="work-done" rows="4" placeholder="Briefly describe your activities..."></textarea>
+<!-- The submit button for 'success' still uses an inline green gradient from your
+previous code which provides good contrast -->
+<button id="submitBtn" onclick="submitToSheet()" style="background:
+linear-gradient(135deg, #10b981, #059669)">SUBMIT DATA</button>
+</div>
+
+<!-- Founders/Co-Founders Dashboard (Hidden by default) -->
+<div id="founders-dashboard" class="container hidden">
+    <h2>Leadership Hub</h2>
+    <p>Strategic Overview</p>
+    <!-- Meeting Points Box (Visible to CEO and Founders/Co-Founders) -->
+    <div class="task-box">
+        <strong>Today's Meeting Points:</strong> Discuss Q3 projections and finalize partnership details.<br>
+        <button onclick="window.open('https://meet.google.com/qdb-fict-aku')">JOIN TODAY'S MEETING</button>
     </div>
+    
+    <!-- CEO Specific Button (Only displayed by JS logic for the CEO) -->
+    <button id="ceo-analytics-btn" class="ceo-btn hidden" onclick="window.open('https://docs.google.com/spreadsheets/d/10zNRI5zDsZHUsxe7KoRuLBL-_kL-_h5vOgwd9HCaF5o/edit?gid=0#gid=0')">
+        VIEW REAL-TIME ANALYTICS
+    </button>
 
-    <!-- Employee Dashboard -->
-    <div id="emp-dashboard" class="container hidden">
-        <h3 id="welcome-name"></h3>
-        <p id="welcome-role"></p>
-        <div class="task-box">
-            <strong>Active Task:</strong> Record monthly analytics including AI utilization metrics.
-        </div>
-        <textarea id="work-done" rows="4" placeholder="Briefly describe your activities..."></textarea>
-        <!-- The submit button for 'success' still uses an inline green gradient from your previous code which provides good contrast -->
-        <button id="submitBtn" onclick="submitToSheet()" style="background: linear-gradient(135deg, #10b981, #059669)">SUBMIT DATA</button>
-    </div>
+    <button class="ceo-btn" onclick="location.reload()" style="border: 1px solid #475569; background: transparent;">LOGOUT</button>
+</div>
 
-    <!-- CEO Dashboard -->
-    <div id="ceo-dashboard" class="container hidden">
-        <h2>Executive Hub</h2>
-        <p>Operations Monitoring Center</p>
-        <button class="ceo-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/10zNRI5zDsZHUsxe7KoRuLBL-_kL-_h5vOgwd9HCaF5o/edit?gid=0#gid=0')">VIEW REAL-TIME ANALYTICS</button>
-        <button class="ceo-btn" onclick="location.reload()" style="border: 1px solid #475569; background: transparent;">LOGOUT</button>
-    </div>
 
-    <script>
-        const employees = {
-            "VM-PH-01": { name: "Sai Gokul", role: "Head – Photography", pass: "gokul@vm" },
-            "VM-PH-02": { name: "Aditya Singathi", role: "Co-Head – Photography", pass: "aditya@vm" },
-            "VM-FI-01": { name: "Jeevan Reddy", role: "Head – Finance", pass: "jeevan@vm" },
-            "VM-FI-02": { name: "Pralaksha Dash", role: "Co-Head - Finance", pass: "pralaksha@vm" },
-            "VM-EV-01": { name: "Bavyesh Papetlla", role: "Head – Event Management", pass: "bavyesh@vm" },
-            "VM-EV-02": { name: "Daiwik Paida", role: "Co-Head – Event Management", pass: "daiwik@vm" },
-            "VM-SA-01": { name: "Ruhan Kanjani", role: "Head – Sales", pass: "ruhan@vm" },
-            "VM-SA-02": { name: "Shreyas Bitra", role: "Co-Head – Sales", pass: "shreyas@vm" },
-            "VM-TR-01": { name: "Nirvan Krivi", role: "Head – Tribal Relations", pass: "nirvan@vm" },
-            "VM-TR-02": { name: "Aaditi Behera", role: "Co-Head – Tribal Relations", pass: "aaditi@vm" },
-            "VM-SM-01": { name: "Kanishka Kodicherla", role: "Head – Social Media", pass: "kanishka@vm" },
-            "VM-SM-02": { name: "Aanya Singh", role: "Co-Head – Social Media", pass: "aanya@vm" },
-            "VM-LO-01": { name: "Savya Kumar", role: "Head – Logistics", pass: "savya@vm" },
-            "VM-CEO-01": { name: "Tinesh Reddy", role: "CEO", pass: "ceo@vm" }
-        };
+<script>
+const employees = {
+"VM-PH-01": { name: "Sai Gokul", role: "Head – Photography", pass: "gokul@vm" },
+"VM-PH-02": { name: "Aditya Singathi", role: "Co-Head – Photography", pass: "aditya@vm" },
+"VM-FI-01": { name: "Jeevan Reddy", role: "Head – Finance", pass: "jeevan@vm" },
+"VM-FI-02": { name: "Pralaksha Dash", role: "Co-Head - Finance", pass: "pralaksha@vm" },
+"VM-EV-01": { name: "Bavyesh Papetlla", role: "Head – Event Management", pass: "bavyesh@vm" },
+"VM-EV-02": { name: "Daiwik Paida", role: "Co-Head – Event Management", pass: "daiwik@vm" },
+"VM-SA-01": { name: "Ruhan Kanjani", role: "Head – Sales", pass: "ruhan@vm" },
+"VM-SA-02": { name: "Shreyas Bitra", role: "Co-Head – Sales", pass: "shreyas@vm" },
+"VM-TR-01": { name: "Nirvan Krivi", role: "Head – Tribal Relations", pass: "nirvan@vm" },
+"VM-TR-02": { name: "Aaditi Behera", role: "Co-Head – Tribal Relations", pass: "aaditi@vm" },
+"VM-SM-01": { name: "Kanishka Kodicherla", role: "Head – Social Media", pass: "kanishka@vm" },
+"VM-SM-02": { name: "Aanya Singh", role: "Co-Head – Social Media", pass: "aanya@vm" },
+"VM-LO-01": { name: "Savya Kumar", role: "Head – Logistics", pass: "savya@vm" },
+"VM-CEO-01": { name: "Tinesh Reddy", role: "CEO", pass: "ceo@vm" },
+// New Founders & Co-Founders with a specific role
+"VM-F-01": { name: "Medha Shree", role: "Founder_CoFounder", pass: "medha@vm" },
+"VM-F-02": { name: "Vardhan Reddy", role: "Founder_CoFounder", pass: "vardhan@vm" },
+"VM-CF-01": { name: "Dimple Priya", role: "Founder_CoFounder", pass: "dimple@vm" },
+"VM-CF-02": { name: "Shravya Shre", role: "Founder_CoFounder", pass: "shravya@vm" },
+"VM-CF-03": { name: "Naga Shaurya Veragoni", role: "Founder_CoFounder", pass: "shaurya@vm" }
+};
+let currentEmp = null;
+const scriptURL = 'https://script.google.com';
 
-        let currentEmp = null;
-        const scriptURL = 'https://script.google.com';
-
-        function login() {
-            const id = document.getElementById('empID').value;
-            const pass = document.getElementById('password').value;
-            if (employees[id] && employees[id].pass === pass) {
-                currentEmp = { id, ...employees[id] };
-                document.getElementById('login-page').classList.add('hidden');
-                if(id === "VM-CEO-01") {
-                    document.getElementById('ceo-dashboard').classList.remove('hidden');
-                } else {
-                    document.getElementById('emp-dashboard').classList.remove('hidden');
-                    document.getElementById('welcome-name').innerText = "Hi, " + currentEmp.name;
-                    document.getElementById('welcome-role').innerText = currentEmp.role;
-                }
-            } else { alert("Authentication Failed. Please verify credentials."); }
+function login() {
+    const id = document.getElementById('empID').value;
+    const pass = document.getElementById('password').value;
+    if (employees[id] && employees[id].pass === pass) {
+        currentEmp = { id, ...employees[id] };
+        document.getElementById('login-page').classList.add('hidden');
+        
+        // Check for specific roles to display the correct dashboard
+        if (id === "VM-CEO-01") {
+            // CEO gets the founders dashboard AND their specific analytics button
+            document.getElementById('founders-dashboard').classList.remove('hidden');
+            document.getElementById('ceo-analytics-btn').classList.remove('hidden');
+        } else if (currentEmp.role === "Founder_CoFounder") {
+            // Founders/Co-Founders get only the founders dashboard
+            document.getElementById('founders-dashboard').classList.remove('hidden');
+        } else {
+            // Standard employees get the employee dashboard
+            document.getElementById('emp-dashboard').classList.remove('hidden');
+            document.getElementById('welcome-name').innerText = "Hi, " + currentEmp.name;
+            document.getElementById('welcome-role').innerText = currentEmp.role;
         }
+    } else {
+        alert("Authentication Failed. Please verify credentials.");
+    }
+}
 
-        function submitToSheet() {
-            const work = document.getElementById('work-done').value;
-            if(!work) return alert("Submission failed: Data entry required.");
-            
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "UPLOADING...";
-            btn.disabled = true;
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: currentEmp.id,
-                    name: currentEmp.name,
-                    role: currentEmp.role,
-                    work: work
-                })
-            }).then(() => {
-                alert("Report successfully securely stored!");
-                location.reload();
-            }).catch(err => {
-                alert("Network latency detected. Please retry.");
-                btn.disabled = false;
-                btn.innerText = "RETRY SUBMIT";
-            });
-        }
-    </script>
+function submitToSheet() {
+const work = document.getElementById('work-done').value;
+if(!work) return alert("Submission failed: Data entry required.");
+const btn = document.getElementById('submitBtn');
+btn.innerText = "UPLOADING...";
+btn.disabled = true;
+fetch(scriptURL, {
+method: 'POST',
+mode: 'no-cors',
+cache: 'no-cache',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+id: currentEmp.id,
+name: currentEmp.name,
+role: currentEmp.role,
+work: work
+})
+}).then(() => {
+alert("Report successfully securely stored!");
+location.reload();
+}).catch(err => {
+alert("Network latency detected. Please retry.");
+btn.disabled = false;
+btn.innerText = "RETRY SUBMIT";
+});
+}
+</script>
 </body>
 </html>
-
