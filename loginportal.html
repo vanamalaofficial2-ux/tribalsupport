@@ -138,6 +138,10 @@ transition: var(--transition-smooth);
 <p>Corporate Portal • 2026 Edition</p>
 <input type="text" id="empID" placeholder="Employee ID">
 <input type="password" id="password" placeholder="Password">
+    <label style="font-size:14px; display:block; margin-top:8px; text-align:left;">
+  <input type="checkbox" onclick="togglePassword()"> Show Password
+</label>
+
 <button onclick="login()">Enter Dashboard</button>
 </div>
 
@@ -184,6 +188,11 @@ Overall stall plan approved	☐<br>
 
 
 <script>
+    function togglePassword() {
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
 const employees = {
 "VM-PH-01": { name: "Sai Gokul", role: "Head – Photography", pass: "gokul@vm", activeTask: "Create IRIS MUN photo checklist (what shots needed)" },
 "VM-PH-02": { name: "Aditya Singathi", role: "Co-Head – Photography", pass: "aditya@vm", activeTask: "Make sample poster visuals using any old photos" },
@@ -266,6 +275,7 @@ btn.innerText = "RETRY SUBMIT";
 </script>
 </body>
 </html>
+
 
 
 
